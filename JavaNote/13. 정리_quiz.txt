@@ -24,6 +24,6 @@ Quiz
         sum += i;
       }       
 8. 반복문의 흐름을 제어하는 제어문을 쓰시오.(2가지)
-    - break, continue
+    - break, continues
 
 

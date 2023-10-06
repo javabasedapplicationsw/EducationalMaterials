@@ -47,7 +47,24 @@
 
 5. 매개변수 전달기법 (parameter passing)
     1) Call By Value (값 전달)
-    2) Call by Reference (번지 전달)
+        - public int add(int a, int b) {
+            int sum = a + b;                                
+            return sum;    
+          }
+        - int a = 10;
+          int b = 20;
+          add(a, b);  
+
+    2) Call by Reference (번지 전달)                <== 자바는 거의 Call by Reference 사용
+         - public int add(int[] a) {
+            int sum = 0;
+            for (int i=0; i<a.length; i++) {
+                sum += a[i];
+            }                            
+            return sum;    
+          }
+        - int[] a = {1,2,3,4,5}; 
+          add(a);         
 
 6. 메서드 오버로딩 (Overloading)
     1) 하나의 클래스 내에서 동일한 이름의 메서드를 여러 개 사용할 수 있는 객체지향 기법 
@@ -57,13 +74,14 @@
                     ---             ----
                     (시그니처, signature)      
         - 예 
-
-         public int add(int x, int y) {        
+                                                     컴파일
+                                                     ======>   
+         public int add(int x, int y) {                         add_int_int(10,50);
             int z = x + y;                     
             return z;
          }
 
-         public float add(float x, float y) {        
+         public float add(float x, float y) {                   add_float_float(34.5f, 56.55f);    
             int z = x + y;                     
             return z;
          }        
@@ -71,4 +89,27 @@
          public int add(int x, int y, int v) {        
             int z = x + y + v;                     
             return z;
-         }          
+         }   
+
+7. 정적 바인딩이란?
+    1) 컴파일 시점에서 사용될(호출될) 메세드가 결정(연결)되는 바인딩                 
+        - add(34.5f, 56.55f); 
+          add(10,50);
+
+8. 개발자가 사용하게 될 메서드 종류 
+    1) 메서드 
+        - 클래스 내에서 독립적으로 만들어야 함 
+        - 하나의 단위작업을 처리 
+
+    2) 메인 클래스 
+        - main() : 미리 작성하여 제공하는 메서드 
+        - 사용자 정의 메서드 1
+        - 사용자 정의 메서드 2        
+
+    3) String 
+        - length(), charAt(int index), toUpperCase()... : 미리 작성하여 제공하는 메서드  
+
+    4) MyClass
+        - 사용자 정의 메서드 1
+        - 사용자 정의 메서드 2               
+        - 사용자 정의 메서드 3
