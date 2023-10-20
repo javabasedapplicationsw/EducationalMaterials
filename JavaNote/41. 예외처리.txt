@@ -1,0 +1,117 @@
+1. 프로그램에서의 오류 
+    1) 컴파일 오류 (compile error)
+        - 프로그램 코드 작성 중 발생하는 문법적 오류 
+        - 최근에는 개발 환경(IDE)에서 대부분의 컴파일 오류는 detection 됨 
+
+    2) 실행 오류 (runtime error)
+        - 실행 중인 프로그램이 의도하지 않은 동작(bug)을 하거나 프로그램이 중지되는 경우 
+        - 실행 오류는 비정상 종료가 되는 경우 시스템의 심각한 장애를 발생 할 수 있음 
+
+2. 예외(Exception) 처리        
+    1) 프로그램의 비정상 종료를 피하여 시스템이 원할이 실행되도록 함 
+    2) 예외 
+        - 프로그램에서 제어할 수 있는 오류 
+            - 예) 읽어들이려는 파일이 존재하지 않거나
+                  네트워크이나 DB 연결이 안되는 경우 등 
+        - 자바는 안전성이 중요한 언어로 대부분 프로그램에서 발생하는 오류에 대해 
+          예외 처리를 해야 함 
+
+3. 예외 클래스들 
+                        Class Throwable
+                            /|\
+                             |
+              ----------------------------------  
+              |                                |
+         Class Error                      Class Exception  
+                                              /|\
+                                               |
+                                    -------------------------                
+                                    |                       |
+                            Class IOException         Class RuntimeException                  
+                                   /|\ 
+                            -----------------------
+                            |                     | 
+            Class FileNotFoundException     Class SocketException   
+
+    1) Exception 클래스
+        - 모든 예외 클래스의 최상위 클래스 
+    2) ArithmeticException 클래스 
+        - 정수를 0으로 나눈 경우 발생 
+    3) NullPointerException 클래스 
+        - 초기화 되지 않은 Object를 사용하는 경우 
+    4) ArrayIndexOutOfBoundsException 클래스
+        - 배열의 크기를 넘어선 위치를 참조하려는 경우             
+
+    5) FileNotFoundException 클래스
+        - 참조하는 파일이 지정된 위치에 존재하지 않는 경우 
+    6) ClassNotFoundException 클래스
+        - 클래스가 로드되지 않은 경우 
+
+4. 예외 처리하기 vs 미루기  
+    1) try ~ catch 문 
+
+        try {
+            예외가 발생 할 수 있는 코드 부분
+        } catch(처리할 예외 타입 e) {
+            try 블록 안에서 예외가 발생했을 때 예외를 처리하는 부분 
+        }
+
+        - 여러 개의 예외가 발생하는 경우 예외를 묶어서 하나의 방법으로 처리 
+            - catch(FileNotFoundException | ClassNotFoundException e) {
+
+              }   
+        - 각각의 예외를 따로 처리할 수도 있음               
+            - catch(FileNotFoundException e) {
+
+              } catch(ClassNotFoundException e) {
+
+              } catch(Exception e) {
+
+              }
+        - Exception 클래스를 활용하여 default처리 할때 Exception 블록은 
+          맨 마지막에 위치해야 함               
+
+    2) try ~ catch - finally 문 
+        - finally 블럭에서 파일을 닫거나, 네트워크을 닫는 등의 리소스 해제 구현을 함 
+        - try{} 블럭이 수행되는 경우 finally{} 블럭은 항상 수행 됨  
+
+    3) try ~ with resources 문   
+        - 리소스를 사용하는 경우 close() 하지 않아도 자동으로 해제되도록 함 
+            - close()를 명시적으로 호출하지 않아도 try() {} 블록에서 열린 리소스는 
+              정상적인 경우나 예외나 발생한 경우 모두 자동으로 해제됨 
+            - 리소스 클래스가 AutoCloseable 인터페이스를 구현 해야 됨 
+              - 예) FileInputStream의 경우 AutoCloseable을 구현하고 있음 
+
+        - java1.7부터 제공되는 구문 
+        - 리소스를 try() 내부에서 선언해야 함 
+          try() {
+
+          }
+        - java9부터 리소스는 try() {} 외부에서 선언하고 변수만을 try(obj)와 같이 사용할 수 있음           
+
+    4) 예외 처리 미루기 
+        - throws를 이용하면 예외가 발생할 수 있는 부분을 사용하는 문장에서 예외를 처리할수 있음 
+
+5. 사용자 정의 예외 클래스 
+    1) 자바에서 제공하는 예외 클래스 외에 프로그래머가 직접 만들어야 하는 예외가 있을 수 있음 
+    2) 기존 예외 클래스 중 가장 유사한 예외 클래스에서 상속 받아 사용자 정의 예외 클래스 구현하면 됨 
+    3) 기본적으로 Exception 클래스를 상속해서 만들 수 있음 
+    4) 예) 패스워드에 대한 예외 처리 클래스 구현하기 
+        - 패스워드를 입력할 때 다음과 같은 오류처리 하기
+            - 비밀번호 null일수 없습니다.
+            - 비밀번호 길이는 8이상입니다.
+            - 비밀번호는 문자로만 이루어져서는 안됩니다.(하나 이상의 숫자나 특수문자를 포함)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

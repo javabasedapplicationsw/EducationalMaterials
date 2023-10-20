@@ -1,0 +1,130 @@
+1. 바이트 단위 입출력 스트림 
+    1) InputStream
+        - 바이트 단위 입력 스트림 최상위 추상 클래스 
+        - 많은 추상 메서드가 선언되어 있고 이를 하위 스트림이 상속받아 구현함 
+        - 하위 클래스 
+            - FileInputStream       파일에서 바이트 단위로 자료를 읽어들임 
+        - 주요 메서드 
+            - int read()            입력 스트림으로부터 한 바이트의 자료를 읽음 
+                                    읽은 자료의 바이트 수를 반환함 
+            - int read(byte[] b)    입력 스트림으로부터 b[] 크기의 자료를 b[]에 읽음 
+                                    읽은 자료의 바이트 수를 반환함   
+            - int read(byte[] b, int off, int len)  
+                                    입력 스트림으로부터 b[] 크기의 자료를 b[]의 off변수 위치부터 
+                                    저장하여 len만큼 읽음           
+                                    읽은 자료의 바이트 수를 반환함     
+
+    2) OutputStream 
+        - 바이트 단위 출력 스트림 최상위 추상 클래스 
+        - 많은 추상 메서드가 선언되어 있고 이를 하위 스트림이 상속받아 구현함 
+        - 하위 클래스 
+            - FileOutputStream      파일에서 바이트 단위로 자료를 씀 
+        - 주요 메서드 
+            - void write(int b)     한 바이트를 출력함
+            - void write(byte[] b)  b[] 크기의 자료를 출력함 
+            - void write(byte[] b, int off, int len)  b[]배열에 있는 자료의 off위치부터 
+                                                      len 개수만큼 자료를 출력함 
+            - void flush()          출력을 위해 잠시 자료가 머무르는 출력 버퍼를 
+                                    강제로 비워 자료를 출력함 
+            - void close()          출력 스트림과 연결된 대상 리소스를 닫음.
+                                    출력 버퍼가 비워짐                                                                                    
+
+2. 문자 단위 입출력 스트림
+    1) Reader 
+        - 문자 단위 입력 스트림 최상위 추상 클래스 
+        - 많은 추상 메서드가 선언되어 있고 이를 하위 스트림이 상속받아 구현함 
+        - 하위 클래스 
+            - FileReader            파일에서 문자 단위로 읽는 스트림 클래스 
+            - InputStreamReader     바이트 단위로 읽은 자료를 문자로 변환해 주는
+                                    보조 스트림 클래스 임 
+            - BufferedReader        문자로 읽을 때 배열을 제공하여 한꺼번에 읽을 수 있는 기능을 
+                                    제공하는 보조 스트림 임                                     
+        - 주요 메서드 
+            - int read()            파일로부터 한 문자를 읽음. 읽은 문자를 반환함 
+            - int read(char[] cbuf) 파일로부터 buf 배열에 문자를 읽음 
+            - int read(char[] cbuf, int off, int len)  파일로부터 buf 배열의 off 위치로부터 
+                                                       len 개수만큼 문자를 읽음 
+            - void close()          입력 스트림과 연결된 대상 리소스를 닫음                                               
+
+    2) Writer 
+        - 문자 단위 출력 스트림 최상위 추상 클래스 
+        - 많은 추상 메서드가 선언되어 있고 이를 하위 스트림이 상속받아 구현함 
+        - 하위 클래스 
+            - FileWriter            파일에서 문자 단위로 출력하는 스트림 클래스 
+            - OutputStreamWriter     바이트 단위의 자료를 문자로 변환해 출력해주는
+                                    보조 스트림 클래스 임 
+            - BufferedWriter        문자로 쓸 때 배열을 제공하여 한꺼번에 쓸 수 있는 기능을 
+                                    제공하는 보조 스트림 임   
+
+        - 주요 메서드
+            - void write(int c)         한 문자를 파일에 출력함 
+            - void write(char[] cbuf)   문자 배열 cbuf의 내용을 출력함 
+            - void write(char[] cbuf, int off, int len)   문자 배열 cbuf의 off위치부터 
+                                                          len 개수의 문자를 출력함 
+            - void write(String str)    문자열 str을 출력함 
+            - void write(String str, int off, int len)    문자열 str의 off번째 문자로부터 
+                                                          len 개수만큼 출력함   
+            - void flush()              출력하기 전에 자료가 있는 공간(출력 버퍼)을 비워
+                                        출력하도록 함 
+            - void close()              출력 스트림과 연결된 리소스를 닫음. 출력 버퍼도 비워짐     
+
+3. 보조 스트림 
+    1) 보조 기능을 제공하는 스트림 
+    2) FilterInputStream, FilterOutputStream이 보조 스트림의 상위 클래스들 
+    3) 생성자의 매개변수로 또 다른 스트림(기반 스트림 or 다른 보조 스트림)을 가짐 
+    4) Decorator Pattern 으로 구현 됨 
+    5) 기반스트림 + 보조 스트림1 + 보조 스트림2 
+        - 바이트 단위 파일 입력 스트림 + 문자로 변환 기능 추가 + 버퍼링 기능 추가 
+    6) 주요 보조스트림
+        - InputStreamReader / OutputStreamWriter 
+            - 바이트 단위로 읽거나 쓰는 자료를 문자로 변환해주는 보조 스트림    
+
+        - BufferedInputStream / BufferedOutputStream
+            - 약 8k의 배열 제공
+            - 입출력을 빠르게 하는 기능이 제공                
+        - BufferedReader / BufferedWriter
+            - 문자용 입출력 보조 스트림 
+
+        - DataInputStream / DataOutputStream
+            - 자료가 메모리에 저장된 상태 그대로 읽거나 쓰는 스트림  
+            - DataInputStream
+                - byte readByte()    1바이트를 읽어 반환함 
+                - char readChar()    한 문자를 읽어 반환함 
+                - double readDouble()  8바이트를 읽어 실수 값을 반환함     
+                - int readInt()      4바이트를 읽어 정수 값을 반환함 
+
+            - DataOutputStream
+                - void writeLong(long v)  8바이트를 출력함 
+                - void writeUTF(String str) UTF-8 인코딩 기반으로 문자열을 출력함   
+                - void writeByte(int v)   1바이트의 자료를 출력함
+                - void writeBoolean(boolean v) 1바이트 값을 출력함     
+
+        - ObjectInputStream / ObjectOutputStream
+            - 직렬화 (serialization)       
+                - 인스턴스의 상태를 그대로 파일 저장하거나 네트워크로 전송하고(serialization) 
+                  이를 다시 복원(deserialization)하는 방식 
+                - 보조 스트림을 활용하여 직렬화를 제공함    
+
+            - 생성자 
+                - ObjectInputStream(InputStream in)   
+                    - InputStream을 생성자의 매개변수로 받아 ObjectInputStream을 생성함 
+                - ObjectOutputStream(OutputStream out)
+                    - OutputStream을 생성자의 매개변수로 받아 ObjectOutputStream을 생성함
+
+            - 직렬화는 인스턴스의 내용이 외부로 유출되는 것이므로 프로그래머가 해당 객체에 대한
+              직렬화 의도를 표시해야 함 
+              - implement Serializable
+                - 구현 코드가 없는 marker interface
+              - transient
+                - 직렬화 하지 않으려는 멤버 변수에 사용함                                                            
+
+4. File 클래스 
+    1) 파일 개념을 추상화한 클래스 
+    2) 입출력 기능은 없고, 파일의 이름, 경로, 읽기 전용등의 속성을 알수 있음
+
+5. Decorator Pattern
+    1) 자바 입출력 스트림에 적용된 패턴 
+    2) 여러 decorator들을 활용하여 다양한 기능을 제공 
+    3) 상속보다 유연한 구현 방식 
+        - 지속적인 기능의 추가 제거가 용이함 
+    4) 데코레이터는 다른 데코레이터나 또는 컴포넌트를 포함해야 함 

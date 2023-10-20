@@ -1,0 +1,57 @@
+1. 입출력(IO) 스트림
+    1) 네트워크에서 자료의 흐름이 물의 흐름과 같다는 비유에서 유래됨 
+    2) 자바는 다양한 입출력 장치에 독립적으로 일관성있는 입출력을 입출력 스트림을 통해 제공 
+        - 입출력이 구현되는 곳 
+            - 파일 시스템, 키보드, 마우스, 네트워크, 메모리 등 모든 자료가 입력되고 출력되는 곳 
+
+2. 입출력 스트림의 구분 
+    1) 대상 기준 : 입력 스트림 / 출력 스트림 
+    2) 자료의 종류 : 바이트 스트림 / 문자 스트림 
+    3) 기능 : 기반 스트림 / 보조 스트림             
+
+3. 입력 스트림 / 출력 스트림
+    1) 입력 스트림 
+        - 대상으로부터 자료를 읽어 들이는 스트림   
+        - FileInputStream, BufferedInputStream, FileReader, BufferedReader 등
+    2) 출력 스트림 
+        - 대상으로 자료를 출력하는 스트림    
+        - FileOutputStream, BufferedOutputStream, FileWriter, BufferedWriter 등 
+
+4. 바이트 스트림 / 문자 스트림 
+    1) 바이트 스트림
+        - 동영상, 음악 파일, 실행 파일등의 자료를 읽고 쓸 때 사용 
+        - FileInputStream, FileOutputStream, BufferedInputStream, BufferedOutputStream 등
+    2) 문자 스트림 
+        - 바이트 단위로 자료를 처리하면 문자는 깨짐. 인코딩에 맞게 2바이트 이상으로 처리하도록 
+          구현된 스트림 
+        - FileReader, FileWriter,  BufferedReader, BufferedWriter 등     
+
+5. 기반 스트림 / 보조 스트림
+    1) 기반 스트림
+        - 대상에 직접 자료를 읽고 쓰는 기능의 스트림 
+        - FileInputStream, FileOutputStream, FileReader, FileWriter 등
+    2) 보조 스트림 
+        - 추가적인 기능을 더해주는 스트림 
+        - InputStreamReader, OutputStreamWriter, BufferedInputStream, BufferedOutputStream 등
+    3) 보조 스트림은 항상 기반 스트림이나 또 다른 보조스트림을 생성자의 매개 변수로 포함함 
+        - 기반 스트림 + 보조 스트림A + 보조 스트림B        
+
+6. 표준 입출력 스트림 
+    1) System 클래스의 표준 입출력 멤버 
+        static final PrintStream err
+        static final InputStream in
+        static final PrintStream out
+
+    2) System.out  
+        - 표준 출력(모니터) 스트림       
+        - System.out.println("출력 메세지");
+
+    3) System.in 
+        - 표준 입력(키보드) 스트림  
+        - System.in.read();     //한 바이트 읽기       
+
+    4) System.err 
+        - 표준 에러 출력(모니터) 스트림        
+        - System.err.println("에러 메시지");
+       
+

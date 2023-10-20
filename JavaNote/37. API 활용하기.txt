@@ -1,0 +1,80 @@
+1. JSON과 XML 
+    1) 둘 다 구조화된 데이터를 표현하고 전송하기 위한 데이터 형식 
+    2) 사용 목적과 상황에 따라 적절한 데이터 형식을 선택하여 사용 
+    3) JSON이 더 많이 사용되고 있음 
+
+2. JSON(JavaScript Object Notation)    
+    1) 경량의 데이터 교환 형식
+    2) 텍스트 기반의 구조화된 데이터를 표현함 
+    3) 가독성이 좋고, 다양한 프로그래밍 언어와 호환됨
+    4) 데이터 형식 구조 
+        - 객체 (Object) 
+            - 중괄호 {}로 묶인 키-값 쌍의 집합 
+            - 키(key)는 문자열 
+            - 값(value)은 JSON 데이터 형식 중 하나가 될 수 있음 
+                - 문자열(String) 
+                    - 큰따옴표로 둘러싸인 일련의 문자
+                - 숫자
+                - 불리언
+                - 객체 (Object)
+                    - 중괄호({})로 묶인 키-값 쌍의 집합
+                - 배열 
+                    - 대괄호([])로 묶인 값의 순서 있는 목록  
+                - 널(Null)
+                    - 값이 없음을 나타내는 특수한 값      
+            - 키와 값은 콜론(:)으로 구분됨 
+            - 여러 개의 키-값 쌍은 쉼표(,)로 구분됨 
+
+            - 예)
+            {
+                "name":"이순신",
+                "age":30,
+                "email":"Admiral@gmail.com",
+                "isStudent":false,
+                "address":{
+                    "city":"서울",
+                    "country":"대한민국"
+                },
+                "hobbies":["독서","여행","운동"]
+            }
+
+3. XML 
+    1) eXensible Markup Language
+    2) 데이터를 저장하고 전송하기 위한 마크업 언어 
+    3) XML 데이터는 트리 구조로 이루어져 있음 
+    4) 요소(element), 속성(attribute), 텍스트(text), 주석(comment)등으로 구성됨         
+    5) 예) 
+        <member>
+            <name>이순신</name>
+            <age>30</age>
+            <email>Admiral@gmail.com</email>
+            <address>
+                <city>서울</city>
+                <country>대한민국</country>
+            </address>
+        </member>
+
+4. gson API 활용하기 
+    1) 자바에서 JSON 데이터를 다루는 방법으로 일반적으로 라이브러리를 사용함 
+    2) JSON을 쉽게 다를 수 있음 
+    3) 대표적인 라이브러리 gson과 jackson이 있음 
+
+            Java Object (DTO, VO)   --------------------->   JSON 
+                                    <---------------------
+
+5. Jsoup API 활용하기 
+    1) 자바 라이브러리 
+    2) HTML 문서를 읽고 파싱하여 웹 크로링, 웹 스크레이핑, 데이터 추출 등의 작업을 수행 
+    3) Jsoup API를 사용하면 HTML 문서에서 원하는 요소를 쉽게 선택하고 조작할수 있음 
+    4) 메서드 
+        - Jsoup.connect(url)
+            - 주어진 url에 연결 시도함 
+            - Connection 객체를 반환함     
+            - 이 객체를 사용하여 GET, POST 요청을 설정할 수 있음   
+        - document.getElementById(id)   
+            - 주어진 id에 해당하는 요소를 찾아서 Element 객체로 반환함 
+        - element.text()
+            - 주어진 요소의 텍스트 내용을 가져옴    
+        - document.select(selector)
+            - 주어진 CSS 선택자와 일치하는 모든 요소를 찾아서 Elements 객체로 반환함 
+            - Elements 객체 : 복수의 Element를 포함하는 클래스                                                             
