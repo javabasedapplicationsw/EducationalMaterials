@@ -1,0 +1,59 @@
+<!DOCTYPE html>		<!-- 설명내용 주석  -->
+<html>
+<head>
+	<meta charset="UTF-8" http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HTML 코딩하기</title>
+	<link rel="stylesheet" href="css/common.css" >		<!-- link : 외부문서를 가져와 연결할 때 사용-대부분 CSS파일 -->
+	<link rel="stylesheet" href="css/reset.css">		<!-- <link />로 외부 CSS 문서를 가져와서 연결하는 방식 (링크방식) -->
+														<!-- style : 스타일(CSS)를 HTML 문서 안에서 작성하는 경우에 사용 -->
+	<style>						/*  내장 방식 : <style></style>의 내용으로 스타일을 작성하는 방식  */
+		/* 주석 추가 */											
+		h1 {
+			font-size: 30px;
+			line-height: 1.5;
+			color: red;
+			margin: 30px 10px;
+		}	
+		div {
+			width: 100px;
+			height: 50px;
+			background-color: red;
+			position: absolute;
+		}	
+		img {
+			width: 100px; 
+			height: 100px;
+		}
+		
+	</style>
+													
+	<script src="js/main.js"></script>					<!-- src 속성 : 자바스크립트(JS) 파일 가져오는 경우-->											
+														<!-- script : 자바스크립트(JS)를 HTML 문서 안에서 작성하는 경우-->
+	<script>											
+		console.log('Hello HiMedia!')
+	</script>														
+</head>
+<body>
+	<h1>하이미디어 천호점</h1>								<!-- h1 :  블록(상자) 요소, 제목을 의미하는 요소 Heading-->
+	<h1>하이미디어 강남점</h1>					
+	<h6>제목6</h6>										<!-- 숫자가 작을수록 더 중요한 제목을 정의-->			
+	<div class=""></div>
+	<br><br>
+	<img src="img/cat.jpg" alt="고양이" />
+	<input type="text" />
+	<input type="checkbox" />
+	<span>Hi</span>
+	<span>Media</span>
+	<br>
+	
+	<!-- 요소의 style 속성에 직접 스타일을 작성하는 방식(인라인 방식) -->
+	<span style="width: 100px;">Hello</span>     <!--width : 요소의 가로 너비를 지정하는 CSS 속성 => 반응없음-->
+	<span style="height: 100px;">HiMedia</span>	 <!--height : 요소의 세로 너비를 지정하는 CSS 속성 => 반응없음-->
+</body>
+</html>
+
+
+
+
+

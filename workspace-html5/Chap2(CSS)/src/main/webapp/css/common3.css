@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+* {
+	color: red;
+}
+
+li {
+	color: chartreuse;
+}
+
+.orange {
+	color: rgb(128, 0, 255);
+}
+
+#oran {
+	color: black;
+}
