@@ -1,0 +1,76 @@
+1. 오라클 설치 전 체크 사항 
+    1) 오라클 설치 전 가급적 윈도우즈 운영체제를 재설치 함 
+        - 재설치는 반드시 필요한 것은 아니지만 오라클 설치 실패 확률을 많이 낮춰 줌 
+    2) 오라클 설치 도중 실패를 한다면 윈도우즈 10 운영체제를 재설치 한 후 그 후 다시
+       오라클 설치 시도함 
+    3) 자신의 PC 사용자 계정명을 영문으로 변경해야 함
+        - 제어판 -> 사용자 계정               
+    4) 윈도우 키 + R -> netplwiz 실행
+        - 사용자 이름 및 전체 이름이 한글로 되어 있으면 영문으로 바꿈
+    5) 각종 보안 프로그램은 반드시 종료함                 
+    6) 윈도우 키 + R -> services.msc 실행
+        - 서비스 체크 
+
+2. 오라클 XE 설치 
+    1) 반드시 설치 실행 파일을 관리자 권한으로 실행함 
+
+3. 오라클 XE 서비스 구동 확인
+    1) 윈도우 키 + R -> services.msc 실행      
+        - 오라클 관련 서비스 제대로 실행되고 있는지 확인  
+
+4. 리스너 정상 구동 확인 
+    1) 윈도우 키 + S -> cmd -> 관리자 권한으로 실행
+    2) lsnrctl status
+        - 현재 PC의 호스트명 :  DESKTOP-0GH7E0J    
+        - 서비스명 : XE
+
+5. SQL*Plus 이용한 오라클 접속 
+
+    1) 윈도우 키 + S -> cmd -> 관리자 권한으로 실행          
+    2) SQLPLUS "/AS SYSDBA"
+        - SELECT DUMMY FROM DUAL;
+
+    3)  C:\Windows\system32>d:
+
+        D:\>cd D:\workspace-sql\sample-database
+
+        D:\workspace-sql\sample-database>
+    
+        D:\workspace-sql\sample-database>dir
+        
+        SQLPLUS ot/0305  
+
+        SQL> host dir
+        SQL> @ot_schema.sql
+        SQL> ALTER SESSION SET NLS_LANGUAGE='AMERICAN';
+        SQL> ALTER SESSION SET NLS_DATE_FORMAT='DD-MON-RR';
+        SQL> @ot_data.sql
+        SQL> select count(*) from contacts;
+
+    4)
+        C:\Windows\system32>d:
+
+        D:\>cd D:\workspace-sql
+
+        D:\workspace-sql>sqlplus hm/0305
+
+        SQL*Plus: Release 18.0.0.0.0 - Production on 금 10월 27 10:24:16 2023
+        Version 18.4.0.0.0
+
+        Copyright (c) 1982, 2018, Oracle.  All rights reserved.
+
+        마지막 성공한 로그인 시간: 금 10월 27 2023 10:05:08 +09:00
+
+        다음에 접속됨:
+        Oracle Database 18c Express Edition Release 18.0.0.0.0 - Production
+        Version 18.4.0.0.0
+
+        SQL> host dir    
+        SQL> @hm_sample_database.sql
+
+
+6. DBeaver를 이용한 오라클 접속 
+    1) C:\app\pc-555\product\18.0.0\dbhomeXE\network\admin\listener.ora 
+    2) SQL 작성 후 Ctrl + enter 키를 누르면 실행됨   
+    3) url 
+        - jdbc:oracle:thin:@DESKTOP-0GH7E0J:1521:XE    

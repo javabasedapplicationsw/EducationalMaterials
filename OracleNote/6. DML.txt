@@ -1,0 +1,54 @@
+1. INSERT 문 
+    1) 테이블이 만들어지면 빈 공간이 만들어 지는 것임
+        - 테이블 안에 데이터를 INSERT하는 것이 필요함 
+    2) 문법
+        - 테이블의 컬럼 순서대로 입력
+
+        INSERT INTO 
+                    TABLE_NAME
+        VALUES
+        (
+            VALUES1
+            ,VALUES2
+            ,VALUES3
+            ,...
+        );        
+
+
+        - 테이블 컬럼을 지정
+
+        INSERT INTO 
+                    TABLE_NAME
+        (
+            COLUMN1
+            ,COLUMN2
+        )                    
+        VALUES
+        (
+            VALUES1
+            ,VALUES2
+        );                         
+
+2. UPDATE 
+    1) 테이블의 존재하는 데이터를 수정하는 작업임
+    2) 업무 처리하는데 필수적인 것임
+    3) 동시성에 유의해야 함
+    4) 문법
+        - UPDATE
+                TABLE_NAME
+          SET COLUMN1 = VALUE1
+            , COLUMN2 = VALUE2
+          WHERE 조건
+          ;
+    5) UPDATE는 대상 행에 대해서 락(lock)을 잡음 
+        - 락 : 다른 사용자는 해당 행에 대해서 작업을 하지 못한다는 것 
+        - UPDATE를 한 후 재빨리 COMMIT을 하지 않는다면 RDBMS의 동시성이 낮아짐 
+
+3. DELETE
+    1) 테이블에서 특정 데이터를 삭제하거나 
+    2) 테이블 내에 존재하는 모든 데이터를 삭제 할수 있음
+    3) 문법
+        - DELETE FROM 
+                    TARGET_TABLE 
+          WHERE 조건식
+          ;                                                                             
