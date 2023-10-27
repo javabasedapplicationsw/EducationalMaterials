@@ -28,6 +28,35 @@
         - 아이디 선택자 (ID Selector)
             - HTML id 속성의 값이 E인 요소 선택 
             - #E               
-            
+
+    2) 복합 선택자(combinators)        
+        - 일치 선택자 (Basic Combinator)    
+            - 예) ABCXYZ
+                - 선택자 ABC와 XYZ를 동시에 만족하는 요소 선택 
+                                    ----------
+        - 자식 선택자 (Child Combinator)
+            - 예) ABC > XYZ    
+                - 선택자 ABC의 자식 요소 XYZ 선택 
+                              ----
+
+        - 하위(후손) 선택자 (Descendant Combinator)
+            - 예) ABC XYZ 
+                - 선택자 ABC의 하위 요소 XYZ 선택 
+                - '띄어쓰기'가 선택자의 기호         
+
+        - 인접 형제 선택자 (Adjacent Sibling Combinator)                                    
+            - 예) ABC + XYZ
+                - 선택자 ABC의 다음 형제 요소 XYZ 하나만 선택.
+                                                ----  
+        - 일반 형제 선택자 (General Sibling Combinator)
+            - 예) ABC ~ XYZ
+                - 선택자 ABC의 다음 형제 요소 XYZ 모두를 선택.
+                                                ----                                                      
+
+    3) 가상 클래스 선택자 (Pseudo-Classes Selectors)
+        - hover 
+            - 예) ABC:hover 
+                - 선택자 ABC 요소에 마우스 커서가 올라가 있는 동안 선택 
+                                   ----------------------------
 
             

@@ -5,4 +5,4 @@
         div { display : block; }
     4) 본질적으로 아무것도 나타내지 않는 콘텐츠 영역을 설정 
         - 꾸미는 목적으로 사용 
-    5) 대부분의 요소를 Wrapping 할수 있고, layout를 나타낼 때 자주 사용함     
+    5) 대부분의 요소를 Wrapping 할수 있고, layout를 나타낼 때 자주 사용함 s    
