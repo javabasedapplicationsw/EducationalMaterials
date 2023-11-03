@@ -1,3 +1,10 @@
+0. DDL 종류
+    1) CREATE
+    2) ALTER
+    3) RENAME
+    4) TRUNCATE
+    5) DROP 
+
 1. 주요 데이터 타입(유형) 
     0) 테이블에 데이터가 저장되는 형태 
     1) CHAR(L)                                                     <-- 문자형
@@ -84,3 +91,31 @@
         - 현재 데이터를 입력하지 못하는 경우 
             - 데이터 입력 시에 컬럼의 값이 지정되어 있을 않을 경우 기본값(DEFAULT)을 사전 설정할수 있음
             - 데이터 입력 시 명시된 값을 지정하지 않은 경우에 NULL 값이 입력됨 
+
+6. ALTER TABLE 
+    1) 컬럼을 추가/삭제/수정
+        - ADD COLUMN 
+            - 추가되는 컬럼은 테이블의 마지막 컬럼이 됨
+            - 컬럼의 위치를 지정할 수는 없음 
+        - DROP COLUMN
+            - 한 번 삭제된 컬럼은 복구가 불가능   
+        - MODIFY COLUMN
+            - 컬럼의 크기를 늘릴 수는 있지만 줄이지는 못함 
+            - NULL 값만 가지고 있거나 아무 행도 없으면 줄일 수 있음 
+            - DEFAULT 값을 바꾸면 변경 작업 이후 발생하는 행 삽입에만 영향을 미침   
+
+    2) 제약조건을 추가/삭제 
+        - ADD CONSTRAINT
+        - DROP CONSTRAINT
+
+7. RENAME TABLE 
+    1) 테이블 명 변경
+        - RENAME A TO B;
+
+8. 삭제 
+    1) TRUNCATE TABLE 
+        - 테이블의 데이터를 비움
+        - TRUNCATE 명령 수행 시 삭제한 데이터는 ROLLBACK이 불가능 
+
+    2) DROP TABLE 
+        - 테이블 제거                          
