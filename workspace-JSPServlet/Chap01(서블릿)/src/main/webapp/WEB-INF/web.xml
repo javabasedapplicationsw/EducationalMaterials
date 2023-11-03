@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
+  <servlet>							<!-- 서블릿 등록 -->				
+    <description></description>
+    <display-name>HelloServlet</display-name>
+    <servlet-name>HelloServlet</servlet-name>
+    <servlet-class>kr.co.himedia.servlet.HelloServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>					<!-- 서블릿과 요청명(요청 URL) 매핑 -->
+    <servlet-name>HelloServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>		<!-- 요청명으로 사용할 경로를 입력함. 컨텍스트(context) 루트를 제외한, '/'로 시작하는 경로 사용해야 함  -->
+  </servlet-mapping>
+  <display-name>Chap01(서블릿)</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description>HTTP 요청과 응답 테스트</description>
+    <display-name>HiServiet</display-name>
+    <servlet-name>HiServiet</servlet-name>
+    <servlet-class>kr.co.himedia.servlet.HiServiet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HiServiet</servlet-name>
+    <url-pattern>/hi/media</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+
+
+
+
+
+
+
