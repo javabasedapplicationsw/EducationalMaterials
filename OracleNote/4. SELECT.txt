@@ -13,6 +13,8 @@
     3) DCL (Data Control Language)
         - 보안을 위해 데이터에 대한 접근 및 사용권한을 조절하는 기능 제공 
 
+    4) TCL (Transaction Control Language)        
+
 
 1. SELECT문 기본 
                                                                           <해석순서>
