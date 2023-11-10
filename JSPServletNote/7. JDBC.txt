@@ -1,0 +1,95 @@
+1. JDBC 설정 및 DB 연결 
+    1) JDBC (Java DataBase Connectivity)
+        - 데이터베이스 연결 및 관련 작업을 할때 사용하는 API 
+    2) JDBC Driver 
+        - JDBC API를 사용하기 위해서 있어야 함 
+        - DBMS에 맞는 JDBC 드라이버를 다운로드 한 후 설정함 
+
+    3) 연결 관리 클래스 작성 
+        - 기본 생성자 
+            - JDBC 드라이버 로드
+            - DB에 연결 
+        - 연결 해제 
+
+    4) 연결 설정 개선 
+        - web.xml 
+
+2. 커넥션 풀(Connection Pool)로 연결 개선 
+    1) 요청이 있을 때마다 DB와 새로 연결했다가 해제함 
+        - DB 작업을 위해 웹서버가 Connection 객체를 생성 할때마다 네트워크 통신 이루어짐 
+        - 사용자 인증 같은 시간이 걸리는 작업 수반됨 
+        - 빈번한 연결과 해제는 시스템 성능에 큰 영향을 미침 
+
+    2) 커넥션 풀(Connection Pool)
+        - Connection 객체를 미리 생성해 풀(Pool)에 넣어놓음
+        - 요청이 있을 때 이미 생성된 Connection 객체를 가져다 사용하는 기법 
+        - 사용이 완료된 객체는 연결 해제가 아니라 풀에 반납하여 필요할 때 재사용할 수 있음 
+
+    3) JNDI (Java Naming and Directory Interface)
+        - 커넥션 풀을 직접 만들어 사용하지 않고 WAS가 제공함 
+        - WAS 하나에 여러 개의 웹 애플리케이션을 구동 시킴 
+            - 애플리케이션마다 자원을 따로 관리하면 낭비도 심하고 관리하기도 어려움   
+        - WAS는 커넥션 풀을 비롯한 여러 자원을 JNDI 서비로 제공함 
+
+        - JNDI 
+            - 자바 소프트웨어에서 객체나 데이터를 전체 경로를 몰라도
+              '이름'만으로 찾아 쓸 수 있는 디렉토리 서비스임.
+            - 이름과 실제 객체와의 연결은 외부의 설정 파일에서 관리함 
+            - 소스 코드를 수정하고 다시 컴파일할 필요가 없음 
+
+    4) WAS의 JNDI를 통해 커넥션 풀을 사용하는 절차       
+        - WAS(톰캣)가 시작할 때 sever.xml과 context.xml에 설정한 대로 커넥션 풀을 생성함
+        - JSP 코드에서 JNDI 서버(WAS가 제공)로 부터 데이터소스 객체를 얻어옴 
+        - 데이터소스로부터 커넥션 객체를 가져옴 
+        - DB 작업 수행 
+        - 모든 작업이 끝나면 커넥션 객체를 풀로 반환함      
+
+3. 커넥션 풀 설정
+    1) server.xml 
+        - 서버 전체와 관련한 설정을 담고 있음
+        - 커넥션 풀을 전역 자원으로 설정 
+            - 
+                <Resource auth="Container" 
+                        driverClassName="oracle.jdbc.OracleDriver"      JDBC 드라이버명(클래스명)
+                        type="javax.sql.DataSource"                     데이터소스로 사용할 클래스명 
+                        initialSize="0"             풀의 초기화 과정에서 미리 만들어놓을 연결개수(기본값은 0)
+                        minIdle="5"                 최소한으로 유지할 연결 개수(기본값은 0)
+                        maxTotal="20"               동시에 사용할수 있는 최대 연결 개수 (기본값은 8)
+                        maxIdle="20"                풀에 반날할 때 최대로 유지될 수 있는 연결 개수 (기본값은 8)
+                        maxWaitMillis="5000"        새로운 요청이 들어왔을 때 얼마만큼 대기할지 밀리초 단위 기술    
+                        url="jdbc:oracle:thin:@localhost:1521/XE"       오라클 연결 URL 
+                        name="himedia_myoracle"                         생성할 자원(풀)의 이름 
+                        username="hm"
+                        password="0305"/>                    
+
+    2) context.xml 
+        - 각각의 웹 애플리케이션마다 하나씩 주어지는 자원을 설정하게 됨     
+        - 커넥션 풀을 참조하는 링크 추가 
+        - <ResourceLink global ="himedia_myoracle" name = "himedia_myoracle" type ="javax.sql.DataSource" />        
+                        ------- 전역 자원 이름      ----- 자원 이름
+
+    3) Connection 관계(순서)
+        - JSP 코드 
+            - context.lookup("himedia_myoracle") 
+
+        - context.xml   
+            - name = "himedia_myoracle" 
+            - global ="himedia_myoracle" 
+
+        - server.xml 
+            -  name="himedia_myoracle"                
+
+4. 간단한 쿼리 작성
+    1) Statement : 인파라미터가 없는 정적 쿼리를 처리할 때 사용
+       PreparedStatement : 인파라미터가 있는 동적 쿼리를 처리할 때 사용
+       CallableStatement : 프로시저나 함수를 호출할 때 사용 
+    2) 인파라미터
+        - 미리 작성해둔 쿼리문에서 일부 값을 나중에 결정할 수 있게 해주는 매개변수    
+        - 쿼리문에서 물음표(?)로 표현함      
+    3) 쿼리문 실행하는 메서드 
+        - int executeUpdate()
+            - INSERT, UPDATE, DELETE 쿼리문 실행할 때 사용 
+            - 실행 후 영향 받은 행의 개수가 int 타입으로 반환됨
+        - ResultSet executeQuery()
+            - SELECT 쿼리문 실행할 때 사용 
+            - 조회한 레코드들의 집합인 ResultSet 객체를 반환함                  
