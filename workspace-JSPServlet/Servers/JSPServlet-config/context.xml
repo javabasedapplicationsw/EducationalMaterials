@@ -26,4 +26,23 @@
     <!--
     <Manager pathname="SESSIONS.ser" />
     -->
+    <ResourceLink global ="himedia_myoracle" name = "himedia_myoracle" type ="javax.sql.DataSource" />
 </Context>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
