@@ -9,7 +9,7 @@
 <body>
 	<h2>쿠키 설정</h2>
 	<%
-		Cookie cookie = new Cookie("myCookie", "뻬뺴로 데이 호갱님");	//쿠키 생성
+		Cookie cookie = new Cookie("myCookie", "뻬뺴로데이호갱님");	//쿠키 생성
 		cookie.setPath(request.getContextPath());					//경로를 컨택스트 루트로 설정
 		cookie.setMaxAge(3600);										//유지 기간을 1시간으로 설정
 		response.addCookie(cookie);									//응답 헤더에 쿠키 추가 
@@ -22,14 +22,30 @@
 			for (Cookie c : cookies) {
 				String cookieName = c.getName();					//쿠키 이름 얻기
 				String cookieValue = c.getValue();					//쿠키 값 얻기 
+				
+				//화면에 출력
+				out.println(String.format("%s : %s<br/>", cookieName, cookieValue));				
 			}
 			
-			//화면에 출력
-			//
 		}
 	%>
+	
+	<h2>페이지 이동 후 쿠키값 확인하기</h2>
+	<a href="cookieValue.jsp">다음 페이지에서 쿠키값 확인하기</a>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
