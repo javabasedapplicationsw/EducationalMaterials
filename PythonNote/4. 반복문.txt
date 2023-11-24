@@ -43,8 +43,20 @@
                       --    -한번에 증가되는 값
                       시작값
 
+4. while문 
+    1) while 조건식 :
+            문장1
+            문장2 
 
+    2) else가 있는 while 루프 
 
+5. 중첩 반복문
 
-
+6. 무한루프와 break, continue
+    1) 형식
+        while True:
+            if 조건:
+                break           # 반복을 중단함
+            if 조건:
+                continue        # 다음 반복을 시작함                 
             
