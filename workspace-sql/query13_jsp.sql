@@ -191,3 +191,67 @@ SELECT * FROM (
 )
 WHERE rNum BETWEEN 1 AND 10
 ;
+
+
+/*
+ * 	hifile 테이블 정의서 (첨부파일 업로드 및 다운로드 용도)
+ * -----------------------------------------------------------------------------------------
+ * 	컬럼명			데이터 타입			null허용			키		기본값			설명
+ * -----------------------------------------------------------------------------------------
+ * 	 id		   number		       N		   기본키 	              일련번호. 기본키
+ *   title	   varchar2(200)	   N							  제목
+ * 	 category  varchar2(30) 				 					  카테고리	  
+ * 	 ofile	   varchar2(100)	   N							  원본파일명(original filename)  
+ *   sfile	   varchar2(30)        N				              저장된 파일명(saved filename)
+ *   postdate	date			   N					sysdate	  등록된 날짜 
+ * 
+ */
+
+DROP TABLE hifile PURGE;
+CREATE TABLE hifile 
+(
+	id 		NUMBER		PRIMARY KEY
+	,title	varchar2(200)	NOT NULL
+	,category	varchar2(30)	
+	,ofile	varchar2(100) NOT NULL
+	,sfile	varchar2(30) NOT NULL
+	,postdate	DATE	DEFAULT sysdate NOT NULL 
+
+);
+
+select seq_board_num.nextval
+from dual
+;
+
+INSERT INTO HM.HIFILE (ID, TITLE, CATEGORY, OFILE, SFILE, POSTDATE)
+VALUES(seq_board_num.nextval, '강아지', '사진', 'puppy.jpg', '20231123', sysdate );
+
+SELECT * FROM HIFILE;
+
+SELECT * FROM HIFILE ORDER BY id DESC 
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
