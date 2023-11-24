@@ -1,0 +1,59 @@
+1. 표현 언어(Expression Language)
+    1) 변수의 값을 출력할 때 사용하는 스크립트 언어임
+    2) JSP 내장 객체의 영역에 담긴 속성 사용할 수 있음
+    3) 산술, 비교, 논리 연산 사용 가능
+    4) EL은  HTML, CSS, JS 어디에서든 사용 가능
+    5) 액션 태그나 JSTL의 속성값으로도 사용 가능
+    6) JSP 스크립트 요소(선언부, 표현식, 스크립틀릿)에서는 사용 불가 
+
+2. 기본 사용법
+    ${ 속성 }
+        - 영역에 저장된 속성을 뜻함
+        - 반드시 영역에 저장 후 사용해야 함 
+            - ex) ${ reqeustScope.saveVar }   
+
+3. EL에서 4가지 영역에 접근하기 위한 내장 객체
+    1) pageScope
+        - pageContext 내장 객체와 같이 page 영역에 저장된 속성값을 읽어옴 
+    2) requestScope
+        - request 내장 객체와 같이 request 영역에 저장된 속성값을 읽어옴        
+    3) sessionScope
+        - session 내장 객체와 같이 session 영역에 저장된 속성값을 읽어옴
+    4) applicationScope
+        - application 내장 객체와 같이 application 영역에 저장된 속성값을 읽어옴
+
+4. 폼(form) 값 처리 위한 EL 내장 객체 
+    1) param      
+        - request.getParameter("매개변수명")과 동일하게 
+          요청 매개변수의 값을 받아옴   
+    2) paramValues
+        - request.getParameterValues​("매개변수명")과 동일하게 
+          요청 매개변수의 값을 문자열 배열로 받아옴 
+        - 다중 선택이 가능한 checkbox를 통해 전달된 폼값을 받을 때 사용  
+
+5. 객체 전달하기
+    1) 폼(form)으로는 객체 전송이 불가능함. 이때 영역(scope)을 사용함 
+        - 객체를 영역에 저장한 후, 내장 객체의 영역의 공유되는 특징 이용해 전달하면 됨     
+
+6. EL의 쿠키, 헤더값을 읽을 수 있는 내장 객체들       
+    1) cookie
+        - 쿠키 읽을 때 사용
+    2) header
+        - request.getHeader(헤더명)와 동일하게 헤더값 읽을 때 사용함
+    3) initParam
+        - web.xml에 설정한 켄텍스트 초기화 매개변수 읽을 때 사용함 
+    4) pageContext
+        - jsp의 pageContext 내장 객체와 동일한 역할함         
+
+7. 컬렉션 사용하기
+
+8. EL의 연산자들 
+    1) 할당연산자
+         ${num1 = 7 }       <-----변수 할당 및 즉시 출력
+         ${num1 = 7;'' }    <-----변수 할당만 되고 출력 되지 않음
+    2) 산술연산자
+    3) 비교연산자
+    4) 논리연산자
+        - && 또는 and 
+        - || 또는 or 
+        - ! 또는 not 

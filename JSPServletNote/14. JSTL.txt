@@ -1,0 +1,125 @@
+0. 용어 정리 
+    1) JDK + Enterprise 
+        - J2EE : Java 2 Platform Enterprise Edition
+        - Java EE : Java Platform Enterprise Edition (Rebranding)
+        - Jakarta EE : Oracle이 Eclipse Foundation에 Java EE 권한을 부여해줌
+            - JSP : Jakarta Server Pages 
+            - JSTL : Jakarta Standard Tag Library
+            - Spring 6 and Spring Boot 3를 support
+            
+1. JSTL             
+    1) JSP에서 빈번하게 사용되는 조건문, 반복문 등 처리해주는 태그 모아
+       표준으로 만들어 놓은 라이브러리임.
+    2) 태그만으로 작성할 수 있기 때문에 코드가 간결해지고 읽기 편해짐 
+    3) 종류 
+        - Core 태그
+            - 변수 선언, 조건문/반복문, URL 처리  
+        - Formatting 태그 
+            - 숫자, 날짜, 시간 포맷 지정 
+        - XML 태그
+        - Function 태그
+        - SQL 태그   
+
+2. JSTL 설정
+    1) JSTL은 확장 태그임 
+    2) 별도 라이브러리가 필요함 
+        - Jakarta Standard Tag Library API (jakarta.servlet.jsp.jstl-api)
+        - Jakarta Standard Tag Library Implementation (jakarta.servlet.jsp.jstl)      
+
+3. 코어(Core) 태그 
+    1) 변수 선언, 조건문, 반복문 등을 대체하는 태그 제공함 
+
+    2) <c:set> 태그 
+        - EL에서 사용할 변수를 설정함
+        - JSP에서 영역에 속성을 저장할 때 사용하는 setAttribute() 메서드와 같은 역할함 
+        - 변수를 생성하는 형식 
+            - <c:set var="변수명"  value="값"  scope="영역"/> 
+            - <c:set var="변수명"  scope="영역"> 
+                value 속성에 들어갈 값
+              </c:set>                
+
+            - <c:set var="변수명" value="저장할 객체 또는 컬렉션" scope="영역" />
+              <c:set target="var로 설정한 변수명" property="객체의 속성명" value="속성값" />
+
+
+            - 속성명            의미
+               var              변수명 설정함
+               value            변수에 할당할 값
+               scope            변수를 생성할 영역 지정. page가 기본값임
+               target           자바빈즈를 설정함
+               property         자바빈즈의 속성, 즉 멤버 변수 지정 
+
+    3) <c:remove /> 태그 
+        - 설정한 변수를 제거함 
+        - removeAttribute() 메서드와 동일한 기능임 
+        - 형식
+            - <c:remove var="변수명" scope="영역"/>       
+            - 영역을 지정하지 않으면 동일한 이름의 변수가 있다면 한꺼번에 삭제됨
+
+    4) <c:if /> 태그 
+        - 단일 조건문을 주로 처리함. else문이 없음 
+        - 형식 
+            - <c:if test="조건" var="변수명" scope="영역">
+                  조건이 true일 때 출력할 문장 
+               </c:if>
+
+            - 속성명            의미
+               test             if문에서 사용할 조건을 지정함 
+               var              조건의 결과를 저장할 변수명 지정함 
+               scope            변수가 저장될 영역 지정함   
+
+            - test 속성의 조건식의 결과가 var 속성에 저장됨 
+        - 조건식 주의사항 
+            - EL이 아닌 일반 값이 오면 무조건 false를 반환함    
+                - 일반 값으로 true가 사용되는 것은 예외임    
+            - 문자열 'tRuE'는 대소문자 상관없이 항상 true를 반환함 
+            - test 속성에 EL을 통해 조건식을 쓸 때 공백이 삽입되면 무조건 false를 반환함 
+
+    5) <c:choose> 태그 
+        - 다중 조건을 처리할 때 사용함 
+        - 하위에 when~otherwise 태그가 있음   
+        - 형식
+            <c:choose>
+                <c:when test="조건1">조건1을 만족하는 경우</c:when>                 <-- if (조건1) {..}
+                <c:when test="조건2">조건2을 만족하는 경우</c:when>                 <-- else if (조건2) {..}
+                <c:otherwise>아무 조건도 만족하지 않는 경우</c:otherwise>           <-- else {..}
+            </c:choose>                                                        
+
+    6) <c:forEach> 태그 
+        - 반복문 처리할 때 사용함
+        - 일반 for문과 향상된 for문 두가지 형태로 사용 가능함
+        - 형식
+            - 일반 for문
+                <c:forEach var="변수명" begin="시작값" end="마지막값" step="증가값" />             
+
+            - 향상된 for문
+                <c:forEach var="변수명" items="컬렉션 혹은 배열" />      
+
+            - 속성명            의미
+               var              변수명 지정
+               items            반복을 위한 객체 지정함. 배열이나 컬렉션 등 지정              
+               begin            시작값 지정
+               end              종료값 지정
+               step             증가할 값 지정
+               varStatus        루프의 현재 상태를 알려주는 변수의 이름을 지정함
+        
+        - varStatus 속성을 통해 얻을 수 있는 정보       
+                                일반 for문                              향상된 for문 
+              -------------------------------------------------------------------------------------                  
+            - current      var에 지정한 현재 루프의 변수값 반환        현재 루프의 실제 요소를 반환
+              index        var에 지정한 현재 루프의 변수값 반환        현재 루프의 인덱스를 표시
+              count        실제 반복 횟수                             실제 반복 횟수
+              first        루프의 처음일때 true 반환                  루프의 처음일때 true 반환 
+              last         루프의 마지막일때 true 반환                루프의 마지막일때 true 반환
+
+    7) <c:forTokens> 태그 
+        - StringTokenizer 클래스처럼 구분자를 기준으로 문자열을 나눠 토큰의 개수만큼 반복해줌 
+            - 토큰 : 문법적으로 의미있는 최소 단위
+        - 형식
+            <c:forTokens var="변수명" items="문자열" delims="문자열 구분자" />
+
+    8) <c:url> 태그 
+        - 지정한 경로와 매개변수를 이용해서 켄텍스트 루트를 포함한 URL 생성함
+        - <a></a>태그의 href 속성, <form></form>태그의 action 속성에 사용함 
+        - 형식
+            <c:url value="설정한 경로" scope="영역" />             
