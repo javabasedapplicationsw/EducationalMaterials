@@ -80,7 +80,7 @@ CREATE SEQUENCE seq_board_num
     NOCACHE                 -- 캐시 안함 (메모리에 시퀀스 값을 미리 할당하지 않음)
 	;
 
-SELECT COUNT(*) FROM BOARD WHERE TITLE LIKE '%아파트%'
+SELECT COUNT(*) FROM BOARD WHERE TITLE LIKE '%2024%'
 ;
 
 SELECT COUNT(*) 
@@ -231,23 +231,58 @@ SELECT * FROM HIFILE;
 SELECT * FROM HIFILE ORDER BY id DESC 
 ;
 
+-----------------------------------------------------------------
+-- mvcboard (모델2 방식, 파일첨부형 게시판 테이블)
+DROP TABLE mvcboard PURGE;
+CREATE TABLE mvcboard
+(
+	id 		NUMBER  	PRIMARY KEY
+	,name	varchar2(50)	NOT NULL 
+	,title	varchar2(200)	NOT NULL
+	,content	varchar2(2000) NOT NULL 
+	,postdate	DATE	DEFAULT sysdate NOT NULL 
+	,ofile		varchar2(200)
+	,sfile		varchar2(30)
+	,downcount	number(5)	DEFAULT 0 NOT NULL 
+	,pass 		varchar2(50) NOT NULL 
+	,visitcount	NUMBER  DEFAULT 0 NOT NULL 
+);
+
+INSERT INTO HM.MVCBOARD (ID, NAME, TITLE, CONTENT, PASS)
+VALUES(seq_board_num.nextval, '이순신', '2023년 12월', '올해 한달 남았습니다...', '0305');
+INSERT INTO HM.MVCBOARD (ID, NAME, TITLE, CONTENT, PASS)
+VALUES(seq_board_num.nextval, '류성룡', '2024년 1월', '1월입니다...', '0305');
+INSERT INTO HM.MVCBOARD (ID, NAME, TITLE, CONTENT, PASS)
+VALUES(seq_board_num.nextval, '이방원', '2024년 2월', '2월입니다...', '0305');
+INSERT INTO HM.MVCBOARD (ID, NAME, TITLE, CONTENT, PASS)
+VALUES(seq_board_num.nextval, '신사임당', '2024년 3월', '3월입니다...', '0305');
+INSERT INTO HM.MVCBOARD (ID, NAME, TITLE, CONTENT, PASS)
+VALUES(seq_board_num.nextval, '이성계', '2024년 4월', '4월입니다...', '0305');
+
+SELECT * FROM MVCBOARD;
+SELECT * FROM MVCBOARD WHERE id='145';
+
+--INSERT INTO MVCBOARD (ID, NAME, TITLE, CONTENT,OFILE ,SFILE, PASS)
+--VALUES(seq_board_num.nextval, ?, ?, ?, ?, ?, ?);
+
+UPDATE MVCBOARD SET VISITCOUNT = VISITCOUNT + 1 WHERE id = '145'
+;
 
 
+UPDATE MVCBOARD SET DOWNCOUNT = DOWNCOUNT + 1 WHERE ID = '147'
+;
+
+SELECT count(*) FROM MVCBOARD WHERE pass = '0304' AND ID = '147'
+;
+
+DELETE FROM MVCBOARD WHERE ID = '142'
+;
+ROLLBACK;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+UPDATE MVCBOARD SET TITLE='굿바이 11월2', NAME='이성계2', CONTENT='굿바이 11월, 웰컴 12월', OFILE='', SFILE=''
+WHERE ID='147' AND PASS ='0305';
+ROLLBACK;
 
 
 
