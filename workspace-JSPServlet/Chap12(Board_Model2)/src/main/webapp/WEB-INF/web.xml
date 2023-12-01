@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
+  <display-name>Chap12(Board_Model2)</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 서블릿 매핑 -->
+  <servlet>
+  	<servlet-name>MVCBoardList</servlet-name>
+  	<servlet-class>kr.co.himedia.mvcboard.ListController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MVCBoardList</servlet-name>
+  	<url-pattern>/mvcboard/list.do</url-pattern>
+  </servlet-mapping>
+  <!-- 서블릿 매핑2 -->
+  <servlet>
+  	<servlet-name>MVCBoardWrite</servlet-name>
+  	<servlet-class>kr.co.himedia.mvcboard.WriteController</servlet-class>
+  	<multipart-config>
+  		<max-file-size>1048576</max-file-size>		<!-- 1MB -->
+  		<max-request-size>10485760</max-request-size>	<!-- 10MB -->
+  	</multipart-config>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MVCBoardWrite</servlet-name>
+  	<url-pattern>/mvcboard/write.do</url-pattern>
+  </servlet-mapping>  
+  
+  <!-- 게시물 페이징 처리를 위한 설정값 -->
+  <context-param>
+  	<param-name>POSTS_PER_PAGE</param-name>
+  	<param-value>10</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>PAGES_PER_BLOCK</param-name>
+  	<param-value>5</param-value>
+  </context-param>
+</web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

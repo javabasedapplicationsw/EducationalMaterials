@@ -1,7 +1,11 @@
 package kr.co.himedia.fileupload;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +13,9 @@ import java.util.Date;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import kr.co.himedia.utils.JSFunction;
 
 public class FileUtility {
 
@@ -96,6 +102,70 @@ public class FileUtility {
 		// 원본 파일명 반환
 		return listFileName;
 		
+	}
+
+	// 첨부된 파일을 찾아 다운로드 함
+	public static void download(HttpServletRequest request, HttpServletResponse response, String directory, String sfileName,
+			String ofileName) {
+		
+		String sDirectory =  request.getServletContext().getRealPath(directory);	
+		try {
+			// 파일을 찾아 입력 스트림 생성
+			File file = new File(sDirectory, sfileName);
+			InputStream inStream = new FileInputStream(file);
+			
+			// 한글 파일명 깨짐 방지
+			/* 
+			 	WOW64 (Windows on Windows 64-bit) 
+			 		- 64비트 버전의 윈도우에서 32비트 응용프로그램을 실행할 수 있다는 의미
+			 		- 인터텟 익스플로러는 현재 과거에 비해 사용 빈도 낮아짐. 허지만 국내 아직 사용되고 있으므로 이에 처리도 해주는 좋음 
+			*/
+			String client = request.getHeader("User-Agent");
+			
+			if (client.indexOf("WOW64") == -1) {			// 웹브라우저가 인터넷 익스플로러가 아닌 경우 
+				ofileName = new String(ofileName.getBytes("UTF-8"), "ISO-8859-1");	//getBytes("UTF-8")로 원본 파일명을 바이트 배열로 변환 후, 
+			} else {																				//ISO-8859-1 캐릭터 셋의 문자열로 재생성함
+				ofileName = new String(ofileName.getBytes("KSC5601"), "ISO-8859-1");  // 익스인 경우 getBytes("KSC5601")을 이용하여 바이트 배열로 변환 후,
+			}																						//ISO-8859-1 캐릭터 셋의 문자열을 재성성함	
+			
+			// 파일 다운로드용 응답 헤더 설정
+			response.reset();			//응답 헤더를 초기화
+			response.setContentType("application/octet-stream");	// 파일 다운로드 창을 띄우기 위한 콘텐츠 타입을 지정함 (8비트 단위의 바이너리 데이터를 의미)
+																	// 응답 헤더로 설정하게 되면 파일의 종류 상관없이 웹 브라저는 다운로드 창을 띄우게 됨
+			response.setHeader("Content-Disposition", "attachment; filename=\""+ofileName+"\"");		
+			
+			response.setHeader("Content-Length", "" + file.length());
+			
+			// 출력 스트림 초기화
+			//out.clear();
+			// response 내장 객체로부터 새로운 출력 스트림 생성
+			OutputStream outputStream = response.getOutputStream();
+			
+			// 출력 스트림에 파일 내용 출력
+			byte[] b = new byte[(int)file.length()];
+			int readBuffer = 0;
+			while((readBuffer = inStream.read(b)) > 0) {
+				outputStream.write(b, 0, readBuffer);
+			}
+			
+			// 입/출력 스트림 닫기
+			inStream.close();
+			outputStream.close();		
+		} catch (FileNotFoundException e) {
+			System.out.println("파일을 찾을 수 없습니다.");
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("예외가 발생했습니다.");
+			e.printStackTrace();			
+		}				
+	}
+
+	// 파일 삭제
+	public static void deleteFile(HttpServletRequest request, String directory, String fileName) {
+		String sdirectory = request.getServletContext().getRealPath(directory);
+		File file = new File(sdirectory +File.separator+ fileName);
+		if (file.exists())
+			file.delete();
 	}
 }
 

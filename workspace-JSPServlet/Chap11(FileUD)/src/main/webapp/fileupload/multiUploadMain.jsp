@@ -20,9 +20,9 @@
   </script>
 </head>
 <body>
-	<h3>멀티 파일 업로드</h3>
+	<h3>파일 업로드</h3>
 	<span style="color: red;">${errorMessage }</span>
-	<form name="fileForm" action="uploadProcess.do" method="post" enctype="multipart/form-data"
+	<form name="fileForm" action="multipleProcess.do" method="post" enctype="multipart/form-data"
 			onsubmit="return validationForm(this)">
 		제목 : <input type="text" name="title"><br/>
 		카테고리(선택사항) : 
@@ -30,7 +30,7 @@
 			<input type="checkbox" name="categori" value="과제" />과제
 			<input type="checkbox" name="categori" value="워드" />워드
 			<input type="checkbox" name="categori" value="음원" />음원<br/>
-		첨부파일 : <input type="file" name="ofile" /><br/>  		
+		첨부파일(다중 선택 가능) : <input type="file" name="ofile" multiple/><br/>  	  <!-- multiple 속성 추가  -->	
 		<input type="submit" value="전송하기">			
 			
 
