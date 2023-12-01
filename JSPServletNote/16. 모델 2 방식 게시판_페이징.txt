@@ -1,0 +1,30 @@
+1. 게시판 구상
+    1) 누구나 회원 인증 없이 글 작성
+        - 작성자는 입력으로 대처 
+        - 글쓰기 시 비밀번호 입력 필수 
+        - 비밀번호 통해 수정, 삭제 가능
+    2) 글쓰기 시 파일 첨부 가능 
+        - 정해진 용량 이상은 업로드 불가하게 함
+        - 첨부파일을 다운로드 가능하게 함    
+
+    3) 요청명(url) 정의     
+            기능       매핑 방법        요청명                컨트롤러(서블릿)          뷰 경로
+        ----------------------------------------------------------------------------------------------
+        - 목록보기       web.xml     /mvcboard/list.do      ListController          /mvcBoard/list.jsp
+        - 글쓰기         web.xml     /mvcboard/write.do     WriteController         /mvcBoard/write.jsp
+        - 상세보기       애너테이션   /mvcboard/view.do      ViewController          /mvcBoard/view.jsp 
+        - 비밀번호 검증   애너테이션   /mvcboard/pass.do     PassController          /mvcBoard/pass.jsp 
+        - 수정          애너테이션   /mvcboard/edit.do      EditController          /mvcBoard/edit.jsp
+        - 삭제          애너테이션    없음                   PassController         없음
+        - 다운로드      애너테이션   /mvcboard/downlod.do    DownloadController     없음 
+
+2. 목록보기
+    1) <!-- 게시물 번호 -->
+        - 목록에 출력할 가상번호 계산
+            - <c:forEach> 태그의 varStatus 속성(index) 이용
+        - 예) 첫 번째 게시물 (게시물 5개가 있는 경우)
+            - 5 - (((1 - 1) * 10 ) + 0) = 5
+        - 예) 두 번째 게시물 (게시물 5개가 있는 경우)    
+            - 5 - (((1 - 1) * 10 ) + 1) = 4
+
+        - ${ 전체 게시물 수  - (((현재 페이지 번호 - 1) * 페이지 사이즈) + varStatus의 index값) }            
