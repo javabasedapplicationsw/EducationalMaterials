@@ -1,0 +1,115 @@
+1. HttpServletRequest의 메서드 
+       http://localhost/httpweb/getDayOfTheWeek?year=2024&month=12&day=6 
+    1) http://localhost:8080/httpweb/getDayOfTheWeek?year=2024&month=12&day=6 
+      
+      ------
+      getScheme() 
+            -----------
+            getServerName()
+                      ------ 
+                      getServerPort()
+                           ---------
+                            getContextPath()
+                                   -----------------
+                                   getServletPath() 
+                                                  --------------------------
+                                                  getQueryString()      
+     -----------------------------------------------
+     getRequestURL()      
+                           ------------------------
+                           getRequestURI()                                              
+
+2. URL (Uniform Resource Locators)
+    1) 인터넷 상에서 자원이 어디 있는지를 알려주기 위한 주소 규약
+    2) 웹 페이지 뿐만 아니라 네트워크상의 모든 자원에 대한 주소를 표현할 수 있음
+    3) 대부분의 URL은 아래 형식으로 표시할수 있음. []로 표시된 부분은 생략가능함
+
+        protocol://[host.]domain[:port][/context][/resource]
+
+3. 클라이언트와 서버 
+    1) 클라이언트 : 서비스를 요청하는 애플리케이션(or 컴퓨터)
+    2) 서버 : 서비스를 제공하는 애플리케이션(or 컴퓨터)          
+        - Web Server (80)
+            - 웹 애플리케이션 서버(WAS)
+                - 웹 애플리케이션을 서비스하는 서버
+                - 서버에 프로그램을 설치해놓고 클라이언트가 이 프로그램을 사용 할수 있게 해주는 것
+                    - 클라이언트가 원격으로 호출 
+        - Email Server (25)
+        - File Server (22)   
+
+        - 서버가 제공하는 리소스 
+            - 정적 리소스(자원) 
+                - 이미지, *.html, *.css, *.js, 리소스 내용이 고정되어 있는 것
+                - 변하지 않는 콘텐트 
+            - 동적 리소스(자원)                       
+                - 프로그램, 스트리밍(라이브방송), 리소스 내용이 고정되어 있지 않은 것
+                - WAS는 HTTP 요청을 해석해 프로그램 실행 후 결과 값으로 만든 콘텐트 
+
+     3) 웹 프로그래밍 
+        - 브라우저로 프로그램을 호출해서 서버에 요청
+        - 서버는 그 프로그램을 실행해서 html로 나오는 결과를 Text문서(문자열)로 만들어서
+          브라우저로 보냄
+        - 브라우저가 html을 보여줌                      
+
+4. Tomcat의 내부 구조 
+    URL : http://localhost/himediaweb/rollDice
+
+    1) Server(Tomcat)
+        -> Service
+        --> Engine (Catalina)
+        ---> Host : localhost 
+        ----> Context (스프링 프로젝트) : /himediaweb
+        -----> Servlet (작은 서버 프로그램=컨트롤러) : /rollDice
+
+    2) 실행 순서 
+        - run() -> ThreadPool -> HTTP11Processor -> Engine -> Host -> Context 
+          -> Filter -> DispatcherServlet -> Controller -> dice()        
+
+5. Tomcat의 설정 파일
+    1) 톰캣설치경로/conf/server.xml          
+        - Tomcat 서버 설정 파일 
+    2) 톰캣설치경로/conf/web.xml 
+        - Tomcat의 모든 web app의 공통 설정 
+    3) 개별프로젝트/WEB-INF/web.xml 
+        - web app의 개별 설정 
+        - context(프로젝트)마다 하나씩 있음 
+
+6. 프로토콜(protocol)
+    1) 서로 간의 통신을 위한 약속, 규칙 
+    2) 주고 받을 데이터에 대한 형식을 정의한 것
+
+7. HTTP (Hyper Text Transfer Protocol)    
+    1) 단순하고 읽기 쉬움 
+        - 텍스트(HTML)기반의 프로토콜 
+    2) 상태를 유지하지 않음 (stateless) 
+        - 클라이언트 정보를 저장 하지 못함 
+        - 보완하기 위해 쿠키 & 세션을 사용 
+    3) 확장 가능함
+        - 커스텀 헤더(header) 추가 가능 
+
+8. HTTP 메시지 - 응답 메시지 
+    1) 상태 코드 
+        - 1xx : Informational - 정보 교환이 목적
+        - 2xx : Success - 성공
+        - 3xx : Redirect - 다른 URL로 재요청
+        - 4xx : Client error - 404 Not Found
+        - 5xx : Server error - 요청은 OK, but 서버 처리중 에러                       
+    2) HTTP 응답 메시지 형식    
+
+9. HTTP 메시지 - 요청 메시지 
+    1) 요청 (Request) method 
+        - GET 
+            - read (얻어오기)
+            - 요청라인에 쿼리스트링으로 데이터 보냄 
+            - 서버의 리소스를 가져오기 위해 설계 
+            - URL에 데이터가 노출되므로 보안에 취약 
+            - 데이터 공유에 유리 -> 전달에 유리 
+            - ex) 검색엔진에서 검색단어 전송에 이용 
+        - POST 
+            - write 
+            - 서버에 데이터를 올리기 위해 설계(Posting)
+            - 데이터를 요청 메시지의 body에 담아 전송
+            - 보안에 유리(HTTP + TLS(암호화) -> HTTPS)
+            - 데이터 공유에는 불리
+            - ex) 글쓰기, 로그인, 회원가입, 파일첨부                      
+
