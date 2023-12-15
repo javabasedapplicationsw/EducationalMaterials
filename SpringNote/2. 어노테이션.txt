@@ -10,4 +10,21 @@
             - 클라이언트에서 들어온 요청이 value의 패스와 동일하면 
               해당 클래스나 메서드를 실행        
             - 클래스 단위에서 사용 가능
-            - 메서드 단위에서 사용 가능                  
+                - 맵핑될 URL의 공통 부분을 클래스에 적용 
+            - 메서드 단위에서 사용 가능  
+
+            - URL 패턴   
+                - *는 여러 글자, **는 하위 경로 포함, ?는 한 글자                       
+                - 종류                              URL pattern                 매칭 URL 예
+                    - exact mapping             /login/hello.do         http://localhost/mediasignup/login/hello.do
+                    - path mapping              /login/*                http://localhost/mediasignup/login/
+                                                                        http://localhost/mediasignup/login/hello
+                                                                        http://localhost/mediasignup/login/hello.do
+                                                                        http://localhost/mediasignup/login/test/ 
+                    - extension mapping         *.do                    http://localhost/mediasignup/hi.do 
+                                                                        http://localhost/mediasignup/login/hello.do
+    4) API 개발 관련 어노테이션
+        - @PostMapping
+            - POST 요청을 처리하기 위한 메서드 지정 
+        - @GetMapping 
+            - GET 요청을 처리하기 위한 메서드 지정            

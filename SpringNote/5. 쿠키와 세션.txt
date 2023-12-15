@@ -1,0 +1,139 @@
+1. 쿠키 (Cookie)
+    1) 이름과 값의 쌍으로 구성된 정보
+    2) 아스키 문자만 가능 
+    3) 서버에서 생성 후 전송
+    4) 브라우저에 저장 
+    5) 유효기간 이후 자동 삭제 
+    6) 서버에 요청시 domain, path(URI)가 일치하는 경우에만 자동 전송 
+
+2. 쿠키의 작동 과정 
+    1) 클라이언트에서 서버로 요청이 가면 서버에서 
+        Cookie cookie = new Cookie("id", "hm");   //쿠키 생성 
+        cookie.setMaxAge(60*60*24);               //유효기간 설정(초)  
+        response.addCookie(cookie);               //응답에 쿠키 추가  
+        //응답헤더에 Set-Cookie: 'id=hm' 1줄 추가해서 클라이언트로 쿠키를 전달 
+        //클라이언트에 쿠키가 저장 
+        //클라이언트가 서버로 요청을 하게되면, 쿠키가 자동으로 요청과 함게 서버로 가게 됨 
+        //요청헤더에 쿠기가 따라감 ==> 클라이언트 식별 기술 
+
+    2) 처음에 클라이언트가 서버에 요청 
+       서버에서 쿠키가 만들어짐
+       만들어진 쿠키를 응답헤더에 담아 보냄 
+       클라이언트에 쿠키도 함께 감
+       서버가 보내준 쿠키가 브라우저에 저장됨
+
+    3) 클라이언트가 (url주소)동일한 서버에 재요청 
+       자동으로 브라우저에 저장된 쿠키가 재요청과 함께 전송됨 
+       쿠키는 클라이언트를 구분하기 위한 기술임 
+       서버는 경우에 따라서 클라이언트를 식별해야 할 때가 있음
+       서버는 쿠키아이디, 상대적 시간 등을 응답 헤더 담아 응답함   
+
+3. 쿠키 삭제와 변경
+    1) Cookie cookie = new Cookie("id");
+       cookie.setMaxAge(0);         //유효기간을 0으로 설정(삭제)
+       response.addCookie(cookie);  //응답에 쿠키 추가 
+    2) Cookie cookie = new Cookie("id");
+       cookie.setDomain("www.google.com");      //도메인 변경
+       cookie.setPath("/medialogin");           //경로의 변경
+       response.addCookie(cookie);  //응답에 쿠키 추가 
+
+4. 쿠키 읽어오기
+    1) Cookie[] cookies = request.getCookies();       
+
+        for (Cookie cookie : cookies) {
+            cookie.getName();
+            cookie.getValue();
+        }      
+
+5. 세션 
+    1) 서로 관련된 요청,답변들을 하나로 묶은 것 - 쿠키를 이용 
+        - a collection of related HTTP transactions 
+          made by one browser to one server
+    2) browser마다 개별 저장소(session객체)를 서버에서 제공
+        - browser : 서버 = 1 : 1    
+        - 같은 PC라도 다른 브라우저라면 다른 세션ID를 저장함 
+    3) 쿠키 : 브라우저에 저장, 세션 : 서버에 저장       
+    4) 같은 세션ID를 쓰는 한 같은 세션저장소(세선 객체)를 사용할수 있는 것임  
+    5) 로그인 ~ 로그아웃까지가 하나의 세션이라고 할수 있음.      
+
+6. 세션의 작동 과정
+    1) 클라이언트가 요청을 하면 서버가 세션 ID(JSESSIONID)를 쿠키에 담아서 응답 해줌.
+        - 브라우저로 요청하면 서버는 세션(저장소)을 무조건 생성함
+        - 세션 객체마다 갖고 있는 것은 세션ID임 
+        - 이 저장소를 사용할 수 있게 세션ID가 담겨있는 쿠키를 생성해서 응답헤더로 보냄 
+    2) 그 다음 요청부터는 앞서 응답된 쿠키가 자동으로 따라감 
+        - 두번째 요청부터 같은 세션임.
+        - 쿠키로 서버에 계속 같이 감.
+        - 요청에 세션이 꼬리표로 붙어서 가는 것임 ==> 구별이 됨 
+            - 서버가 이 JSESSIONID를 보고 같은 브라우저에서 왔는지 여부를 알수 있음.
+    3) HTTP 각 요청은 독립적임 ==> 서로 관련이 없음 
+        - 그런데 쿠키를 이용해서 세션ID를 활용해서 특정 요청들에는 공통점이 있게됨 
+        - 같은 세션ID라는 공통점이 생기게 됨 ==> 그룹화 됨.  
+            - 같은 세션ID를 사용하면서 세션 저장소를 사용할수 있게 됨.
+            - 프로그램들에서 세션 객체를 사용할수 있음.    
+
+    4) 세션이 끝나고 나면 새로운 세션 ID가 발급됨
+        - 이 다음부터 새로운 세션이 시작됨               
+
+7. 세션 종료 방법
+    1) 수동 종료 
+        - invalidate() 
+        - 로그아웃시 사용 
+    2) 자동 종료 - web.xml
+        - Time out        
+        - <session-config>
+            <session-timeout>30</session-timeout>
+          </session-config>                 
+
+8. 기본 객체 & 유효 범위 & 속성
+    1) 세션 객체 얻기 
+        HttpSession session = request.getSession();   
+        session.setAttribute("id", "hm");    
+
+    2) (jsp)기본 객체
+        - request, response, session, application, config, page, pageContext, out, exception 
+        - session
+            - HttpSession을 구현한 객체
+            - 세션 정보 저장에 사용        
+
+    3) 세션과 관련된 메서드 
+        - String getId()               
+            - 세션의 Id를 반환 
+        - long getLastAccessedTime()            
+            - 세션 내에서 최근 요청을 받은 시간을 반환 
+        - boolean isNew()
+            - 새로 생성된 세션인지를 반환 
+            - request.getSession() 호출 후 사용 
+        - void invalidate()
+            - 세션 객체 제거 (즉시 종료)
+        - void setMaxInactiveInterval(int interval)
+            - 지정된 시간(초)후에 세션을 종료 (예약종료)
+        - int getMaxInactiveInterval()
+            - 예약된 세션 종료 시간 반환 
+
+        - void setAttribute(String name, Object value)
+            - 지정된 값(value)을 지정된 속성이름(name)으로 저장 
+        - Object getAttribute(String name)
+            - 지정된 이름(name)으로 저장된 속성의 값을 반환 
+        - void removeAttribute(String name)
+            - 지정된 이름(name)의 속성을 삭제 
+
+        - Enumeration getAttributeName()
+            - 기본 객체에 저장된 모든 속성의 이름을 반환                                                                         
+
+9. 쿠키 vs 세션 
+
+                쿠키 (Cookie)                       세션(HttpSession)
+          --------------------------------------------------------------
+                브라우저에 저장                        서버에 저장
+                서버부담 X                             서버 부담 O 
+                보안에 불리                            보안에 유리 
+                서버 다중화에 유리                      서버 다중화에 불리          
+
+10 . 세션 구현 
+    1) 홈(/)에서 board를 클릭하면 BoardController가 로그인 유무를 확인
+        - 로그인 되어 있으면 boardList.jsp이 이동    
+        - 로그인 안되어 있으면 loginForm.jsp로 리다이렉트 
+            - loginForm.jsp에서 입력한 id,pwd를 LoginController가 실행
+                - 일치하면 boardList.jsp으로 이동
+                - 일치하지 않으면  다시 loginForm.jsp로 리다이렉트

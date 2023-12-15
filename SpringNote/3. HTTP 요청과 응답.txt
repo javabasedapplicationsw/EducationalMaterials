@@ -111,5 +111,21 @@
             - 데이터를 요청 메시지의 body에 담아 전송
             - 보안에 유리(HTTP + TLS(암호화) -> HTTPS)
             - 데이터 공유에는 불리
-            - ex) 글쓰기, 로그인, 회원가입, 파일첨부                      
+            - ex) 글쓰기, 로그인, 회원가입, 파일첨부        
+
+10. redirect와 forward 처리 
+    1) redirect 
+        - 클라이언트에서 수동으로 write.jsp로 요청(Request) 
+            - 첫번째 요청은 GET/POST 요청
+        - 서버에서 300번대 응답헤더(redirect)로 응답
+        - 클라이언트에서 자동으로 login.jsp로 GET 요청(Request)   
+            - 두번째 요청은 무조건 GET 요청으로 보냄
+        - 요청 2번, 응답 2번 
+
+    2) forward
+        - 클라이언트에서 write.jsp로 요청(Request)
+        - write.jsp에서 login.jsp로 동일한 request에 저장하고 전달 
+        - login.jsp에서 클라이언트로 응답 
+        - 요청 1번, 응답 2번       
+        - request는 Model, write.jsp는 Controller, login.jsp는 View 
 
