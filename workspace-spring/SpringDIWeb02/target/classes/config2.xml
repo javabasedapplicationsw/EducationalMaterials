@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="car" class="com.cheonho.ac.beans02.Car" scope="singleton" />	<!-- singleton이 기본값, prototype은 매번 새로운 객체 생성 -->
+	<bean id="engine" class="com.cheonho.ac.beans02.Engine" />
+	<bean id="door" class="com.cheonho.ac.beans02.Door" scope="prototype" />
+
+</beans>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="car" class="com.cheonho.ac.beans04.Car" scope="singleton" >
+		<constructor-arg name="color" value="blue" />
+		<constructor-arg name="oil" value="300" />
+		<constructor-arg name="engine" ref="engine" />
+		<constructor-arg name="doors">
+			<array value-type="com.cheonho.ac.beans04.Door">
+				<ref bean="door" />
+				<ref bean="door" />
+			</array>
+		</constructor-arg>
+		
+	</bean>	
+	<bean id="engine" class="com.cheonho.ac.beans04.Engine" />
+	<bean id="door" class="com.cheonho.ac.beans04.Door" scope="prototype" />
+	
+</beans>
