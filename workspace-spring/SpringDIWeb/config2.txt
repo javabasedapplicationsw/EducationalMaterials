@@ -1,0 +1,2 @@
+car=com.cheonho.di.mimic02.Truck
+engine=com.cheonho.di.mimic02.Engine
