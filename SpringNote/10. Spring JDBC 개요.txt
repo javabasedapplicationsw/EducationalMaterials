@@ -1,0 +1,36 @@
+1. JDBC 
+    1) 모든 자바의 데이터 엑세스 기술의 근간이 됨 
+    2) 내부적으로는 DB와의 연동을 위해 JDBC를 이용함 
+    3) 안정적이고 유연하고, 로우 레벨 기술로 인식되고 있음 
+    4) 간단한 SQL을 실행하는 데도 중복된 코드가 반복적으로 사용됨 
+
+2. Spring JDBC 
+    1) 기존 JDBC의 단점을 극복
+    2) 간결한 형태의 API 제공함 
+    3) 반복적으로 해야 하는 많은 작업들을 대신 해줌 
+    4) 실행할 SQL문과 바인딩 할 파라미터를 넘겨 주거나,
+       쿼리의 실행 결과를 어떤 객체에 넘겨 받을지를 지정하면 됨 
+    5) DB 컨넥션을 가져오는 DataSource을 bean으로 등록해야 함
+         - 컨넥션 풀링 지원 
+            - 미리 정해진 개수만큼의 DB 컨넥션을 풀(Pool)에 준비해 둠 
+            - 애플리케이션이 요청할 때마다 Pool에서 꺼내서 하나씩 할당해줌 
+            - 다시 돌려받아서 Pool에 넣는 식의 기법임 
+        - 다중 사용자를 갖는 엔터프라이즈 시스템에서 반드시 컨넥션 풀링 기능을 지원하는
+          DataSource를 사용해야 함  
+        - Spring에서는 DataSource를 공유 가능한 Spring Bean으로 등록해 주어
+          사용할 수 있도록 해줌                      
+    6) 해주는 작업
+        - Connection 열기와 닫기 
+            - Spring JDBC가 필요한 시점에 Connection 관련된 모든 작업을 알아서 진행함 
+            - 진행 중에 예외가 발생했을 때도 열린 모든 Connection 객체를 닫아줌 
+        - Statement 준비와 닫기                
+            - SQL 정보가 담긴 Statement 또는 PreparedStatement를 생성하고 
+              필요한 준비 작업을 해줌 
+            - 사용이 끝나고 나면 알아서 객체를 닫아줌   
+        - Statement 실행 
+            - SQL 담긴 Statement를 실행하는 것도 Spring JDBC가 해줌 
+        - ResultSet Loop 처리 
+            - ResultSet에 담긴 쿼리 실행 결과가 한 건 이상이면 ResultSet 루프를
+              만들어서 반복해주는 것도 Spring JDBC가 해줌 
+        - Transaction 처리 
+

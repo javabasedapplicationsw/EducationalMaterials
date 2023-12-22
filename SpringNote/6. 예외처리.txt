@@ -3,4 +3,4 @@
     2) 메서드 앞에 @ExceptionHandler를 붙여서 try~catch의 catch처럼 사용이 가능함 
         - 같은 클래스 내에서 사용 
     3) 클래스 앞에 @ControllerAdvice를 붙여서 try~catch의 catch처럼 사용이 가능함 
-        - 모든 패키지에 적용         
+        - 모든 패키지에 적용         .

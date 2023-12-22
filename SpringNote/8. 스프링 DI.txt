@@ -1,0 +1,135 @@
+6. 빈 (Bean)이란?
+    1) JavaBeans
+        - 재사용 가능한 컴포넌트, iv(상태), getter&setter, no-args constructor  
+    2) Servlet & JSP bean 
+        - MVC의 Model, EL, scope, JSP container가 관리 
+    3) EJB (Enterprise Java Beans)
+        - 복잡한 규칙, EJB container가 관리 
+    4) Spring Bean    
+        - POJO (Plain Old Java Object), 단순, 독립적, Spring container가 관리     
+
+7. BeanFactory와 ApplicationContext
+    1) Bean 
+        - Spring Container가 관리하는 객체  
+    2) Spring Container
+        - Bean 저장소
+        - Bean을 저장, 관리(생성, 소멸, 연결)
+    3) BeanFactory
+        - Bean을 생성, 연결 등의 기본 기능을 정의 
+    4) ApplicationContext
+        - BeanFactory을 확장해서 여러 기능을 추가 정의   
+
+8. ApplicationContext(AC)의 종류 
+    - 다양한 종류의 AnnotationContext 구현체 제공
+
+        AC의 종류                XML                     Java Config 
+       -----------------------------------------------------------------------------------
+        non-Web   GenericXmlApplicationContext        AnnotationConfigApplicationContext
+        Web            XmlWebApplicationContext       AnnotationConfigWebApplicationContext
+
+    - ApplicationContext의 주요 메서드 
+        - getBeanDefinitionNames()
+        - getBeanDefinitionCount()
+        - getBean()        
+        - getType()
+
+9. AC의 설정파일 
+    1) web.xml  
+        - root-context.xml : new XmlWebApplicationContext() - 부모AC 
+            <context-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>/WEB-INF/spring/root-context.xml</param-value>
+            </context-param>    
+
+        - servlet-context.xml : new XmlWebApplicationContext() - 자식AC 
+            <servlet>
+                <servlet-name>appServlet</servlet-name>
+                <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+                <init-param>
+                    <param-name>contextConfigLocation</param-name>
+                    <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+                </init-param>
+                <load-on-startup>1</load-on-startup>
+            </servlet>        
+
+    2) Root AC와 Servlet AC 
+        - 자식 AC를 등록된 빈을 찾은 후 부모 AC를 찾음       
+        - 부모 AC는 공통으로 사용하는 Bean을 등록
+        - 자식 AC는 개별적으로 사용하는 Bean을 등록      
+
+10. 빈의 초기화
+    1) src/main/resources에 파일 생성 
+    2) 빈(Bean)의 생성과 초기화 
+        - <bean>을 이용해서 빈을 생성할 수 있음 
+            - id와 class 속성을 가짐 
+                - id : 빈을 가리키는 레퍼런스 변수 이름을 명시함 
+                - class : 클래스 이름을 명시함 
+
+            - 기존 객체 생성 방법 
+                - Car car = new Car();
+            - IoC 컨테이너에서 객체 생성 방법 
+                - <bean id="" class="" />        
+
+        - <property>를 이용한 빈 초기화 
+            - 필드 초기화 할수 있음 
+                - setter()를 이용 
+            - name 속성에 필드 이름 명시함 
+            - 데이터 타입이 배열인 경우
+                - <array>를 이용해서 값을 명시함                                     
+
+        - <constructor-arg>를 이용한 빈 초기화 
+            - 생성자를 이용 
+
+        - 빈의 초기화 
+            - <list></list>            
+            - <set></set>
+            - <map></map>
+
+11. @Autowired 
+    1) 스프링 DI 애너테이션
+    
+    2) 적용 대상
+        - 인스턴스 변수 (iv)
+        - setter()
+        - 메서드 
+        - 참조형 매개변수를 가진 생성자 
+
+    3) 의존성 주입(DI) 방법
+        - 필드 선언 방법
+        - 세터(setter) 메서드 방식
+        - 생성자 방식 
+            - 스프링 공식 권장            
+    
+    4) Spring container에서 타입으로 빈을 검색해서 참조 변수에 자동 주입 (DI)
+                           ------------ 
+        - 검색된 빈이 n개이면, 그 중에 참조변수와 이름이 일치하는 것을 주입 
+                     ---                       ----------  
+        - 주입 대상이 변수일 때, 검색된 빈이 1개 아니면 예외 발생    
+                     ---                  ---    
+        - 주입 대상이 배열일 때, 검색된 빈이 n개라도 예외 발생하지 않음 
+                     ----                 ---                      
+        - @Autowired(required = false) 일때, 주입할 빈을 못찾아도 예외 발생하지 않음  
+        
+        - Spring container에서 이름으로 빈을 검색해서 참조 변수에 자동 주입(DI)
+                               ----------------
+            - 일치하는 이름의 빈이 없으면, 예외 발생함                     
+
+12. @Resource
+    1) Spring Container에서 이름으로 빈을 검색해서 참조변수에 자동 주입(DI)
+    2) 일치하는 이름의 빈이 없으면 예외 발생함 
+
+13. @Component
+    1) <component-scan>로 @Component가 클래스를 자동 검색해서 빈으로 등록    
+    2) @Controller, @Service, @Repository, @ControllerAdvice의 메타 애너테이션 
+
+14. @Value, @PropertySource    
+
+15. 애너테이션 비교 
+
+        스프링 애너테이션           표준 애너테이션(JSR-330)
+        -----------------------------------------------------------------------------------
+        @Autowired                  @Inject 
+        @Qualifier                  @Qualifier, @Named
+                                    @Resource                   스프링에는 이름 검색이 없음
+        @Scope("singleton")         @Singleton                  
+        @Component                  @Named, @ManagedBean                                     

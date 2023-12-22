@@ -1,0 +1,100 @@
+1. Spring Framework
+    1) 자바 생태계에서 가장 많이 사용되는 프레임워크 
+    2) 국내 전자 정부 표준 프레임워크 - 공공기관 웹 서비스 개발 
+    3) 필요한 기능과 환경 제공
+        - 개발자가 비지니스에 집중할 수 있도록 함 
+
+2. Spring Framework 핵심 개념 
+    1) 제어 역전(IoC)   
+    2) 의존성 주입(DI)     
+    3) 관점 지향 개발(AOP)
+
+3. 제어의 역전 (Inversion of Control)
+    1) 객체 생명 주기의 제어권 관련 개념 
+    2) 구분
+        - 객체 생명 주기를 직접 제어 
+                          --------  
+            - 기본적으로 개발자가 직접 필요한 객체를 생성
+            - 객체에 필요한 의존성도 직접 주입 
+            - 예)
+                    Car car = new Car();
+                    car.turboDrive();
+`                       
+                    ---------------------------------
+                    public void turboDrive() {
+                        engine = new TurboEngine();
+                        engine.start();
+                        ...
+                    }
+
+        - 객체 생명 주기를 위임      
+                          ---
+            - 스프링 컨테이너 
+            - IoC 컨테이너   
+            - 예)
+                     Car car = new Car();
+                     car.drive(new TurboEngine());
+                     
+                     --------------------------------
+                     public void drive(Engine engine) {
+                        engine.start();
+                        ...
+                     }
+
+    3) 제어의 흐름을 전통적인 방식과 다르게 뒤바꾸는 것      
+
+4. 의존성 주입 (Dependency Injection)
+    1) 필요한 의존성 컴포넌트를 스프링 컨테이너, IoC 컨테이너가 주입 
+        - cf) 전통적인 방식은 필요한 컴포넌트 직접 생성 및 주입 
+    2) 사용할 객체를 외부에서 주입받는 것    
+
+       ---------------------------------------------------------      
+
+5. Spring DI의 서론적 의미
+    1) 변경에 유리한 코드1 
+        - 다형성(Polymorphism)
+            - 예)
+                    ElectronicCar car = new ElectronicCar();
+                    -------------           ---------------
+                                   \||/
+                                    ||                                      
+                    Truck car = new Truck()
+                    -----           -------         
+
+
+                    Car car = new ElectronicCar();
+                                ---------------
+                            \||/
+                            ||                                      
+                    Car car = new Truck()
+                                -------    
+
+    2) 변경에 유리한 코드2
+        - Map과 외부 파일        
+            ---------------------------------------------
+                Key       |         Value
+            ---------------------------------------------
+                "car"     |    "com.cheonho.Truck"
+                "engine"  |    "com.cheonho.SuperEngine"
+
+    3) 객체 컨테이너 (ApplicationContext) 만들기 
+        - 객체 저장소 
+
+    4) 자동 객체 등록하기 (component-scanning)       
+        - @Component
+            - 패키지 내의 모든 클래스를 읽어서 Set에 저장  
+        - 패키지 내에 @Component붙은 클래스 찾기 
+            - @Component가 붙어있으면 객체를 생성해서 map에 저장 
+
+    5) 객체 찾기 
+        - by Name (이름-id으로 찾기)
+        - by Type (타입으로 찾기)
+
+    6) 객체를 자동으로 연결하기    
+        - @Autowired   
+            - map을 뒤져서 각 타입(Type)에 맞는 객체 주소를 찾아서 참조변수에 대입
+            - by Type, by Name 
+        - @Resource  
+            - isInstance로 value값을 찾음 
+            - 타입의 첫글자를 소문자로 바꿔서 찾음   
+
