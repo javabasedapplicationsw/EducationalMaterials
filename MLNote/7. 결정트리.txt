@@ -1,0 +1,73 @@
+1. 개요 
+    1) 트리 모델 계열의 근간인 결정 트리 
+        - 기본 모델 (based model)
+    2) 결정 트리(Decision Tree)
+        - 관측값과 목표값을 연결시켜주는 예측 모델
+        - 나무 모양으로 데이터를 분류함 
+        - 각 변수의 특정 지점을 기준으로 데이터를 분류해가며 예측 모델을 만듦
+
+2. 학습 순서
+    1) 문제 정의 
+    2) 라이브러리 및 데이터 불러오기 & 데이터 확인하기 
+    3) 전처리 
+    4) 모델링 및 예측하기 
+
+3. 문제 정의 
+    1) 현재 내 연봉 수준 적절한가?
+        - 나이, 교육수준, 혼인 상태, 직업, 인종 성별 등 
+    2) 결정 트리 알고리즘 활용해서 연봉 등급을 예측하기 
+
+4. 라이브러리 및 데이터 불러오기 & 데이터 확인하기 
+    1) 컬럼들
+        - age : 연령	
+        - workclass	: 고용 형태
+        - education	: 학력
+        - education-num	: 교육 연수
+        - marital-status : 혼인 상태	
+        - occupation : 직업	
+        - relationship : 가족 관계	
+        - race	: 인종
+        - sex	: 성별
+        - capital-gain : 자산 증가	
+        - capital-loss : 자산 감소	
+        - hours-per-week : 주당 노동 시간	
+        - native-country : 본국	
+        - class : 연봉 구분 (종속변수)            
+
+5. 전처리 (범주형 데이터)
+    1) 종속변수인 class 
+    2) data.describe()       # 통계 정보 출력
+        - object형 변수가 많음
+            - mean, std와 같은 기존 통계적 정보가 모두 NaN로 처리되어 있음 
+        - 변수가 5개만 보임 
+            - describe()는 object형의 데이터를 제거하고 통계적 수치만 보여줌 
+    3) data.describe(include='all')    #object형이 포함된 통계정보 출력
+        - unique, top, freq 행이 추가되었음 
+            - unique :  각 변수에서 가지고 있는 고유한 value의 숫자임 
+            - top :  각 변수별로 가장 많이 등장하는 value 출력됨 
+            - freq : top에 나와있는 value가 해당 변수에서 총 몇 건인지 보여줌 
+            - 새로 추가된 행들은 오로지 object형의 변수들만을 위한 것임 
+            - 기존 숫자형 변수들은 NaN으로 처리되어 있음 
+
+    4) 더미 변수로 바꾸어 활용하는 방법
+        - 값의 종류만큼 새로운 변수들이 생겨남 
+            - 꼭 필요하지 않다면 변수 수를 줄일 방법을 강구할 필요가 있음.  
+            - 값의 종류가 10개 미만인 변수는 그대로 둠 
+            - 값의 종류가 10개 이상인 변수만 확인하여 조치검토 해야 함.
+                - education, occupation, native-country  
+
+        - education 변수 처리 => 삭제      
+        - occupation 변수 처리 => 더미 변수로 처리 (변환하면 14개가 생김)
+        - native-country 변수 처리 
+            - United-States 가 압도적으로 큰 비중 차지함 
+
+    5) 결측치 처리 및 더미 변수 변환   
+        - 총 3개의 변수에서 결측치가 보임
+            - workclass (5%)
+            - occupation (5%)
+            - native-country (1.7%)          
+
+6. 모델링 및 평가하기
+
+
+    
