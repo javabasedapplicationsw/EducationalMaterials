@@ -15,6 +15,8 @@ CREATE TABLE t_user
 
 SELECT * FROM T_USER;
 
+
+
 INSERT INTO HM.T_USER
 (ID, PWD, NAME, EMAIL, BIRTH, SNS, REG_DATE)
 VALUES('cheonho', '0305', 'cheonho', 'cheonho@gmail.com', '2000-12-22', 'youtube', sysdate);
@@ -26,7 +28,18 @@ VALUES('cheonho2', '0305', 'cheonho2', 'cheonho2@gmail.com', '2000-11-22', 'fb',
 DELETE FROM T_USER
 ;
 
-SELECT * FROM t_user 
-WHERE ID = 
+SELECT * FROM t_user WHERE ID = 'cheonHo';
+
+
+DELETE FROM t_user WHERE id = 'cheonHo3';
+
+UPDATE T_USER
+SET PWD='', NAME='', EMAIL='', BIRTH='', SNS='', REG_DATE=''
+WHERE ID='';
+
+
+
+
+
 
 
