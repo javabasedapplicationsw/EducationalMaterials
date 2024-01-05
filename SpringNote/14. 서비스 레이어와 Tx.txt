@@ -1,0 +1,15 @@
+1. 서비스 계층(Layer)의 분리
+    1) 비지니스 로직의 분리
+
+    2) 관심사 분리  
+        - @Controller
+            - Presentation Layer 
+            - 서비스 계층을 주입(DI)받고, 서비스 계층을 호출함 
+        - @Service 
+            - Business Logic 
+            - 메서드 이름이 업무 용어로 정의 
+            - Dao를 주입(DI)받고, Dao를 호출함 
+            - Tx를 적용하기가 적합함 
+        - @Repository
+            - Persistence Layer (영속계층) 
+            - Data Acess Layer         
