@@ -1,3 +1,12 @@
+0. 트랜잭션 (Transaction)
+    1) 여러 개의 DML 명령문을 하나의 논리적인 작업 단위로 묶어서 관리하는 것
+    2) All 또는 Nothing 방식으로 작업을 처리함으로써 작업의 일관성을 유지함 
+    3) 웹 애플리케이션에선 Service 클래스의 각 메서드가 애플리케이션의 단위 기능을 수행 
+    4) 예
+        - 게시글 글 조회 시 해당 글을 조회하는 기능과 조회 수를 갱신하는 기능 
+        - 쇼핑몰에서 상품 주문 시 주문 상품을 테이블에 등록하는 기능과 주문자의 포인트를 갱신하는 기능 
+        - 은행에서 송금 시 송금자의 잔고를 갱신하는 기능과 수신자의 잔고를 갱신하는 기능 
+
 1. 서비스 계층(Layer)의 분리
     1) 비지니스 로직의 분리
 
@@ -12,4 +21,46 @@
             - Tx를 적용하기가 적합함 
         - @Repository
             - Persistence Layer (영속계층) 
-            - Data Acess Layer         
+            - Data Acess Layer     
+
+2. TransactionManager
+    1) 일반적으로 DAO의 각 메서드는 개별 Connection을 사용하고 있음 
+    2) 같은 Tx내에서 같은 Connection을 사용할 수 있게 관리   
+    3) DAO에서 Connection을 얻거나 반환할 때 DataSourceUtils를 사용해야 함 
+    4) TransactionManager로 Transaction 적용하기          
+
+3. @Transactional로 Transaction 적용하기 
+    1) AOP를 이용한 핵심 기능과 부가 기능의 분리 
+    2) @Transactional은 클래스나 인터페이스에도 붙일 수 있음
+
+4. @Transactional (스프링의 트랜잭션) 속성
+    1) isolation 
+        - Tx의 iolation level을 지정 
+            - READ_UNCOMMITED
+            - READ_COMMITED
+            - REPEATABLE_READ (기본값)
+            - SERIALIZABLE    
+    2) readOnly 
+        - Tx이 데이터를 읽기만 하는 경우 
+    3) rollbackFor
+        - 지정된 예외가 발생하면, Tx을 rollback
+        - RuntimeException과 Error는 자동 rollback 
+    4) NoRollbackFor
+        - 지정된 예외가 발생해도, Tx을 rollback하지 않음 
+    5) timeout 
+        - 지정된 시간(초)내에 Tx이 종료되지 않으면, Tx를 강제 종료       
+    
+    6) propagation     
+        - 트랜잭션 전파 규칙 설정 
+        - Tx의 경계(boundary)를 설정하는 방법을 지정 
+        - propagation 속성 값
+            - REQUIRED
+                - 트랜잭션 필요.
+                - Tx이 진행중이면 참여하고, 없으면 새로운 Tx 시작
+                    - 진행 중인 트랜잭션이 있는 경우 해당 트랜잭션 사용 
+                    - 트랜잭션이 없으면 새로운 트랜잭션 생성(디폴트 값)
+            - REQUIRES_NEW                        
+                - 항상 새로운 트랜잭션 생성 
+                - Tx이 진행 진행 중이건 아니건, 새로 Tx 시작
+                    - 진행 중인 트랜잭션이 있는 경우 기존 트랜잭션을 일시 중지 시킨 후 새로운 트랜잭션 시작 
+                    - 새로 시작된 트랜잭션이 종료되면 기존 트랜잭션 계속 진행 

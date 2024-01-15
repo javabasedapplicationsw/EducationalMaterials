@@ -91,10 +91,25 @@
           종류                  애너테이션              설명
     -------------------------------------------------------------------------------                  
     1) before advice           @Before          메서드의 시작 부분에 추가되는 부가 기능
+                                                    - 타겟 메서드가 실행되기 이전 시점에 처리해야 할
+                                                      필요가 있는 부가기능을 정의 
+                                                    - JoinPoint 앞에서 실행되는 Advice    
     2) after advice            @After           메서드의 끝 부분에 추가되는 부가 기능  
-    3) around advice           @Around          메서드의 시작과 끝 부분에 추가되는 부가 기능                      
-    4) after returning         @AfterReturning  예외가 발생하지 않았을 때 실행되는 부가 기능
-    5) after throwing          @AfterThrowing   예외가 발생했을 때 실행되는 부가 기능     
+    3) around advice           @Around          메서드의 시작과 끝 부분에 추가되는 부가 기능  
+                                                    - 타겟 메서드가 호출되기 이전 시점과
+                                                      이후 시점에 모두 처리해야 할 필요가 있는 부가기능
+                                                    - JoinPoint 앞과 뒤에서 실행되는 Advice            
+
+    4) after returning advice        @AfterReturning  예외가 발생하지 않았을 때 실행되는 부가 기능
+                                                        - 타겟 메서드가 정상적으로 실행된 이후 시점에
+                                                          처리해야 할 필요가 있는 부가기능을 정의
+                                                        - JoinPoint 메서드 호출이 정상적으로 종료된
+                                                          되에 실행되는 Advice  
+
+    5) after throwing advice         @AfterThrowing   예외가 발생했을 때 실행되는 부가 기능 
+                                                        - 타겟의 메서드가 예외를 발생된 이후 시점에 
+                                                          처리해야 할 필요가 있는 부가기능을 정의 
+                                                        - 예외가 던져질 때 실행되는 Advice        
 
 5. Spring AOP 구현 방식
     1) Advice 클래스 작성
@@ -112,4 +127,52 @@
 
     2) XML 설정 파일에 <aop:aspectj-autoproxy />를 설정함 
 
-   
+6. Pointcut 표현식 문법
+    1) AspectJ 포인트컷 표현식은 포인트컷 지시자를 이용하여 작성함
+    2) 포인트컷 지시자 중에서 가장 대표적으로 사용되는 것은 execution() 임
+    3) execution() 지시자를 이용한 포인트컷 표현식 구조 
+
+            public,private 생략가능  
+               ---------------- 
+    execution( [접근제한자 패턴] 리턴타입패턴 메서드이름패턴() [throws 예외패턴] )
+                                            ---------------
+                                             ..   파라미터 개수에 상관없는 패턴
+                                             ...   
+
+                  package     class  any type and number of arguments                                      
+                 ------------- -   --
+    "execution(* com.house.aop.*.*(..))"
+              --                 -   
+              any return type    method
+
+
+    execution(* hello(..))
+        - hello라는 이름을 가진 메서드를 선정하는 것.
+        - 파라미터는 모든 종류를 다 허용함 
+
+    execution(* hello())    
+        - 파라미터 패턴이 ()로 되어 있으니 
+          hello() 메서드 중에서 파라미터가 없는 것만 선택함   
+
+    execution(* com.house.service.UserServiceImpl.*(..))        
+        - com.house.service.UserServiceImpl 클래스를 직접 지정하여
+          이 클래스가 가진 모든 메서드를 선택함
+
+    execution(* com.house.service.*.*(..)) 
+        - com.house.service 패키지의 모든 클래스에 적용됨
+          단 서브패키지의 클래스는 포함되지 않음 
+
+    execution(* com.house.service..*.*(..))           
+        - com.house.service 패키지의 모든 클래스에 적용됨
+          그리고 '..'를 사용해서 서브패키지의 모든 클래스까지 포함함.
+
+    execution(* *..MyMath.*(..))
+        - 패키지에 상관없이 MyMath라는 이름의 모든 클래스에 적용됨.
+          다른 패키지에 같은 이름의 클래스가 있어도 적용이 됨.
+
+7. Spring AOP 특징
+  1) Spring은 프록시(Proxy) 기반 AOP를 지원함 
+  2) 프록시(Proxy)가 호출을 가로챔 (intercept)
+  3) Spring AOP는 메서드 조인 포인트만 지원함 
+    - Aspectj을 사용하면 객체의 생성, 필드값의 조작, static 메서드 호출 등
+      다양한 작업에 부가기능을 적용할 수 있음.
