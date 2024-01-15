@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="shop.interhouse.orm.repository.BoardMapper">
+
+	<sql id="selectFromBoard">
+		SELECT BNO , TITLE , CONTENT , WRITER , VIEW_CNT , COMMENT_CNT , REG_DATE 
+		FROM T_BOARD	
+	</sql>
+	
+	<select id="select" parameterType="int" resultType="BoardDto">
+		<include refid="selectFromBoard" />
+		where bno = #{bno} 
+	</select>
+	
+	<delete id="deleteAll">
+		delete from t_board
+	</delete>
+
+	<insert id="insert" parameterType="BoardDto">
+		INSERT INTO T_BOARD 
+			(bno, title, CONTENT, WRITER)
+		VALUES 
+			(seq_board_num.nextval, #{title}, #{content}, #{writer})	
+	</insert>
+	
+</mapper>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
