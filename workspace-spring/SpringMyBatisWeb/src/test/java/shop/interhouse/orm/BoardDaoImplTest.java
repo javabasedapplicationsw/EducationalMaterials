@@ -18,7 +18,7 @@ public class BoardDaoImplTest {
 	@Autowired
 	private BoardDao boardDao;
 	
-	@Test
+	//@Test
 	public void selectTest() throws Exception {
 		assertTrue(boardDao != null);
 		System.out.println("boardDao = " + boardDao);
@@ -38,6 +38,16 @@ public class BoardDaoImplTest {
 		boardDto = boardDao.select(2);
 		System.out.println("boardDto = " + boardDto);
 		assertTrue(boardDto.getBno().equals(2));
+	}
+	
+	@Test
+	public void insertDummyDataTest() throws Exception {
+		boardDao.deleteAll();
+		
+		for(int i=1; i <= 250; i++ ) {
+			BoardDto boardDto = new BoardDto("Pioneering" + i, "Ready for Action"+i, "cheonho");
+			boardDao.insert(boardDto);
+		}
 	}
 }
 

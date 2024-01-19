@@ -18,6 +18,11 @@
 	<delete id="deleteAll">
 		delete from t_board
 	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM T_BOARD
+		WHERE bno = #{bno} AND WRITER = #{writer}		
+	</delete>
 
 	<insert id="insert" parameterType="BoardDto">
 		INSERT INTO T_BOARD 
@@ -25,6 +30,22 @@
 		VALUES 
 			(seq_board_num.nextval, #{title}, #{content}, #{writer})	
 	</insert>
+	
+	<select id="selectPage" parameterType="map" resultType="BoardDto">
+		<include refid="selectFromBoard" />
+		ORDER BY REG_DATE DESC, BNO DESC 
+		OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM T_BOARD
+	</select>
+	
+	<update id="increaseViewcnt" parameterType="int">
+		UPDATE T_BOARD 
+		SET VIEW_CNT = VIEW_CNT + 1
+		WHERE bno = #{bno}	
+	</update>
 	
 </mapper>  
 

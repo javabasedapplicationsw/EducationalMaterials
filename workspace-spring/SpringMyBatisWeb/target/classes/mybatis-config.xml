@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
   
 <configuration>
- 	<typeAliases>
+ 	<typeAliases>  <!-- DAO에서 SQL문으로 값을 전달 할 때 또는 SQL문을 실행 한 후 가져온 값을 DAO로 전달 할때 사용할 빈 생성 -->
  		<typeAlias alias="BoardDto" type="shop.interhouse.orm.domain.BoardDto"/>
  	</typeAliases>
 </configuration>  
