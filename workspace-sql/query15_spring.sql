@@ -110,6 +110,7 @@ VALUES
 ;	
 
 
+
 --alter SEQUENCE seq_board_num increment by -2;		-- 현재값만큼 빼기
 --select seq_board_num.nextval from dual;
 --alter SEQUENCE seq_board_num increment by 1;	
@@ -118,11 +119,22 @@ VALUES
 
 SELECT * FROM user_sequences;
 
+SELECT BNO , TITLE , CONTENT , WRITER , VIEW_CNT , COMMENT_CNT , REG_DATE 
+FROM T_BOARD
+ORDER BY REG_DATE DESC, BNO DESC 
+;
+
+SELECT COUNT(*) FROM T_BOARD; 
+
+UPDATE T_BOARD 
+SET VIEW_CNT = VIEW_CNT + 1
+WHERE bno = 250
+;
 
 
-
-
-
+DELETE FROM T_BOARD
+WHERE bno = '245' AND WRITER = 'cheonho'
+;
 
 
 
