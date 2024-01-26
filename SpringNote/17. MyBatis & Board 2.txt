@@ -1,0 +1,37 @@
+1. 마이바티스의 동적 SQL문 
+    1) 공통 SQL문에 대해 조건절의 유무에 따라 동적으로 공통 SQL문에 
+       조건절을 추가 
+    2) 주로 SQL문의 조건절에서 사용
+    3) 조건절(where)에 조건을 동적으로 추가 
+    4) 종류
+        - <if>태그로 동적 SQL문 만들기  
+            - 사용법
+                <where>
+                    <if test='조건식'>
+                        추가할 구문
+                    </if>
+                </where>
+
+        - <choose> 태그로 동적 SQL문 만들기  
+            - 사용법
+                <choose>
+                    <when test='조건식1'>
+                        구문1
+                    </when>
+                    <when test='조건식2'>
+                        구문2
+                    </when>   
+                    ....
+                    <otherwise>
+                        구문 n + 1 
+                    </otherwise>                 
+                </choose>
+
+        - <foreach> 태그로 동적 SQL문 만들기  
+            - 사용법
+                <foreach item="item" collection="list" index="index" open="(" close=")" seperator=",">
+                    #{item}
+                </foreach>
+
+
+    5) <sql></sql>태그와 <include /> 태그로 SQL문 중복 제거하기               
