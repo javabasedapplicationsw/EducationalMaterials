@@ -13,6 +13,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="<c:url value='/resources/css/menu.css' />" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 	<title>게시판 리스트</title>
 	<style type="text/css">
 		* {
@@ -96,6 +97,56 @@
 			margin-top: 50px;
 			margin: auto;
 		}
+		
+		.btn-write {
+			background-color: rgb(236, 236, 236);
+			border: none;
+			color: black;
+			padding: 6px 12px;
+			font-size: 16px;
+			cursor: pointer;
+			border-radius: 5px;
+			margin-left: 30px;
+		}
+		
+		.btn-write:hover {
+			text-decoration: underline;
+		}
+		
+		.search-form {
+			height: 37px;
+			display: flex;
+		}
+		.search-option {
+			width: 100px;
+			height: 100%;
+			outline: none;
+			margin-right: 5px;
+			border: 1px solid #ccc;
+			color: gray;
+		}
+		.search-input {
+			color: gray;
+			background-color: white;
+			border: 1px solid #ccc;
+			height: 100%;
+			width: 300px;
+			font-size: 15px;
+			padding: 5px 7px;
+		}
+		.search-input::placeholder {
+			color: gray;
+		}
+		.search-button {
+			width: 20%;
+			height: 100%;
+			background-color: rgb(22,22,22);
+			color: rgb(209,209,209);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 15px;
+		}
 	</style>
 </head>
 <body>
@@ -113,14 +164,28 @@
 		let msg = "${msg}"
 		if(msg == "DEL_OK") alert("성공적으로 삭제되었습니다.")
 		if(msg == "DEL_ERR") alert("삭제되었거나 없는 게시물입니다.")
+		if(msg == "WRT_OK") alert("성공적으로 등록되었습니다.")
 	</script>
 	
+
 	<div style="text-align: center;">
 		<div class="board-container">
 			<div class="search-container">
-				<form action="">
-				
+				<form action="<c:url value='/board/list' />" class="search-form" method="get">
+					<select class="search-option" name="option">
+						<option value="A" ${option=='A' ? "selected" : "" }>제목+내용</option>
+						<option value="T" ${option=='T' ? "selected" : "" }>제목</option>
+						<option value="W" ${option=='W' ? "selected" : "" }>작성자</option>
+					</select>
+					
+					<input type="text" name="keyword" class="search-input" value="${param.keyword }"
+							placeholder="검색어를 입력해주세요" />
+					<input type="submit" class="search-button" value="검색" />							
 				</form>
+				
+				<button id="writeBtn" class="btn-write" onclick="location.href='<c:url value="/board/write" />'">
+				<i class="fas fa-pen"></i>글쓰기</button>
+				
 			</div>
 		
 			<table>

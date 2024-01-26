@@ -11,4 +11,6 @@ public interface BoardService {
 	public int getCount() throws Exception;
 	public BoardDto read(Integer bno) throws Exception;
 	public int remove(Integer bno, String writer) throws Exception;
+	public int write(BoardDto boardDto) throws Exception;
+	public int modify(BoardDto boardDto) throws Exception;
 }
