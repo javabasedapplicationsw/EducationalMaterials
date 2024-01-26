@@ -136,6 +136,10 @@ DELETE FROM T_BOARD
 WHERE bno = '245' AND WRITER = 'cheonho'
 ;
 
+UPDATE T_BOARD 
+SET TITLE = '1월 22일_수정', CONTENT = '월요일 한주가 시작되었습니다_수정', UP_DATE = SYSDATE 
+WHERE BNO = 251 AND WRITER = 'cheonho'
+;
 
 
 
