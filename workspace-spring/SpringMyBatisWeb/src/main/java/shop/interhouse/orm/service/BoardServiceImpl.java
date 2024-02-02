@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import shop.interhouse.orm.domain.BoardDto;
+import shop.interhouse.orm.domain.SearchItem;
 import shop.interhouse.orm.repository.BoardDao;
 
 @Service
@@ -50,6 +51,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int modify(BoardDto boardDto) throws Exception {
 		return boardDao.update(boardDto);
+	}
+
+	@Override
+	public List<BoardDto> getSearchResultPage(SearchItem sc) throws Exception {
+		return boardDao.searchSelectPage(sc);
+	}
+
+	@Override
+	public int getSearchResultCnt(SearchItem sc) throws Exception {
+		return boardDao.searchResultCnt(sc);
 	}
 
 }

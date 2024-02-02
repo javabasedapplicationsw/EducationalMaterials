@@ -18,4 +18,6 @@ public interface BoardDao {
 	public int update(BoardDto boardDto) throws Exception;
 	public int searchResultCnt(SearchItem sc) throws Exception;
 	public List<BoardDto> searchSelectPage(SearchItem sc) throws Exception;
+	
+	public int updateCommentCnt(Integer bno, int cnt) throws Exception;
 }

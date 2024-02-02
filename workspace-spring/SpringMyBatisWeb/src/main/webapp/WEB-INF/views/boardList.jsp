@@ -201,7 +201,7 @@
 					<tr>
 						<td class="no">${boardDto.bno }</td>
 						<td class="title">							
-							<a href="<c:url value="/board/read?bno=${boardDto.bno }&page=${page }&pageSize=${pageSize }" />">${boardDto.title }</a>							
+							<a href="<c:url value="/board/read${pr.sc.queryString}&bno=${boardDto.bno }" />">${boardDto.title }</a>							
 						</td>
 						<td class="writer">${boardDto.writer }</td>
 						<td class="regdate"><fmt:formatDate value="${boardDto.reg_date }" pattern="yyyy-MM-dd" type="date"/></td>

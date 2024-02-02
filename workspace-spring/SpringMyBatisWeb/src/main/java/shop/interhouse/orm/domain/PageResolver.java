@@ -106,6 +106,14 @@ public class PageResolver {
 		return NAV_SIZE;
 	}
 
+	public SearchItem getSc() {
+		return sc;
+	}
+
+	public void setSc(SearchItem sc) {
+		this.sc = sc;
+	}
+
 	@Override
 	public String toString() {
 		return "PageResolver [sc=" + sc + ", totalCnt=" + totalCnt + ", NAV_SIZE=" + NAV_SIZE + ", totalPage="

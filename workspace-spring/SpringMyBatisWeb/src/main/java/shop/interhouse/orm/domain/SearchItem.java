@@ -88,6 +88,14 @@ public class SearchItem {
 		if (result < 0) result = 0;
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "SearchItem [page=" + page + ", pageSize=" + pageSize + ", option=" + option + ", keyword=" + keyword
+				+ "]";
+	}
+	
+	
 	
 }
 

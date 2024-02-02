@@ -69,6 +69,10 @@
 			cursor: pointer;
 			border-radius: 5px;
 		}
+		
+		.btn {
+			text-decoration: underline;
+		}
 	</style>
 </head>
 <body>
@@ -85,15 +89,17 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			let bno = $("input[name=bno]").val()
+						
 			$("#listBtn").on("click", function() {
-				location.href = "<c:url value='/board/list?page=${page}&pageSize=${pageSize}' /> "
+				location.href = "<c:url value='/board/list${searchItem.queryString}' /> "
 			})
 			
 			$("#removeBtn").on("click", function() {
 				if(!confirm("정말로 삭제하시겠습니까?")) return;
 				
 				let form = $("#form")
-				form.attr("action", "<c:url value='/board/remove?page=${page}&pageSize=${pageSize}' />")
+				form.attr("action", "<c:url value='/board/remove${searchItem.queryString}' />")
 				form.attr("method", "post")	
 				form.submit()	
 			})
@@ -141,6 +147,58 @@
 				if(formCheck())
 					form.submit()
 			})
+				
+			
+			$("#commentList").on("click", ".delBtn", function() {
+				//alert("삭제 버튼 클릭됨")
+				let cno = $(this).parent().attr("data-cno")			//<li> 태그는 <button>의 부모임
+				let bno = $(this).parent().attr("data-bno")
+
+				$.ajax({
+					type : 'DELETE',						// 요청 메서드
+					url :	'/orm/comments/'+cno+'?bno='+bno,	// 요청 URI 
+					success : function(result) {		// 서버로부터 응답이 도착하면 호출될 함수
+						alert(result)							
+						showList(bno)
+					},
+					error : function() {				// 에러가 발생할 때 호출될 함수 
+						alert("error")
+					}
+				})
+				
+			})					
+			
+			let showList = function(bno) {
+				$.ajax({
+					type : 'GET',						// 요청 메서드
+					url : '/orm/comments?bno='+bno,	// 요청 URI
+					success : function(result) {		// 서버로부터 응답이 도착하면 호출될 함수
+						$("#commentList").html(toHtml(result))	// result는 서버가 전송한 데이터(댓글들)
+					},
+					error : function() {				// 에러가 발생할 때 호출될 함수 
+						alert("error")
+					}
+				})
+			}		
+						
+			let toHtml = function(comments) {
+				let tmp = "<ul style='display: block;'>"
+				
+					comments.forEach(function(comment) {
+						tmp += '<li style="background-color: #f9f9fa; border-bottom: 1px solid rgb(235,236,239); color: black;" '
+						tmp += ' data-cno=' + comment.cno
+						tmp += ' data-bno=' + comment.bno
+						tmp += ' data-pcno=' + comment.pcno + '>'
+						tmp += ' commenter=<span class="commenter">' + comment.commenter + '</span>'
+						tmp += ' comment=<span class="comment">' + comment.comment + '</span>'	
+						tmp += ' <button class="delBtn">삭제</button>'
+						tmp += '</li>'
+					})
+						
+				return tmp += "</ul>"
+			}	
+			
+			showList(bno)
 			
 		})
 	</script>
@@ -166,8 +224,9 @@
 				<button type="button" id="removeBtn" class="btn btn-remove"><i class="fas fa-trash"></i>삭제</button>
 			</c:if>
 			<button type="button" id="listBtn" class="btn btn-list"><i class="fas fa-bars"></i>목록</button>
-			
+					
 		</form>
+		<div id="commentList"></div>
 	</div>
 </body>
 </html>

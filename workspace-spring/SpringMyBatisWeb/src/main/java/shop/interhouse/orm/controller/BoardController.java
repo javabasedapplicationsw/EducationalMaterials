@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import shop.interhouse.orm.domain.BoardDto;
 import shop.interhouse.orm.domain.PageResolver;
+import shop.interhouse.orm.domain.SearchItem;
 import shop.interhouse.orm.service.BoardService;
 
 @Controller
@@ -104,13 +106,11 @@ public class BoardController {
 	}
 
 	@GetMapping("/read")
-	public String read(Integer bno, Integer page, Integer pageSize, Model m) {
+	public String read(Integer bno, SearchItem sc, Model m) {
 		
 		try {
 			BoardDto boardDto = boardService.read(bno);
 			m.addAttribute(boardDto);
-			m.addAttribute("page", page);
-			m.addAttribute("pageSize", pageSize);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -121,8 +121,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/list")
-	public String list(@RequestParam(defaultValue = "1") Integer page,
-					   @RequestParam(defaultValue = "10") Integer pageSize,
+	public String list(SearchItem sc,
 						Model m, HttpServletRequest request) {
 		
 		if (!loginCheck(request)) 		// 로그인 안했으면 로그인 화면으로 이동 
@@ -130,25 +129,14 @@ public class BoardController {
 		
 		
 		try {
-			int totalCnt = boardService.getCount();
+			int totalCnt = boardService.getSearchResultCnt(sc);
 			m.addAttribute("totalCnt", totalCnt);
 			
-			PageResolver pageResolver = new PageResolver(totalCnt, page, pageSize);
-			if (page < 0 || page > pageResolver.getTotalCnt())
-				page = 1;
-			if (pageSize < 0 || pageSize > 50)
-				pageSize = 10;
-			
-			Map map = new HashMap();
-			map.put("offset", (page-1)*pageSize);
-			map.put("pageSize", pageSize);
+			PageResolver pageResolver = new PageResolver(totalCnt, sc);
 					
-			List<BoardDto> list = boardService.getPage(map);	
+			List<BoardDto> list = boardService.getSearchResultPage(sc);
 			m.addAttribute("list", list);
 			m.addAttribute("pr", pageResolver);
-			
-			m.addAttribute("page", page);
-			m.addAttribute("pageSize", pageSize);
 			
 			
 			
