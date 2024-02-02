@@ -1,0 +1,72 @@
+1. Ajax 정의 
+    1) Asynchronous JavaScript and XML 
+    2) 자바스크립트를 사용한 비동기 통신 기술
+        - 클라이언트와 서버 간의 XML이나 JSON 데이터를 주고 받는 기술 
+    3) 요즘은 JSON을 주로 사용 
+    4) 비동기 통신으로 데이터를 주고 받기 위한 기술  
+    5) 웹페이지 전체(UI + data)가 아닌 일부(data)만 업데이트 가능 
+
+
+2. 웹 페이지 동작 방식
+    1) 기존 웹 페이지 동작 방식 
+        - 요청  ====================> 요청 받음
+                                      요청 처리
+                                      HTML 생성
+          결과페이지<================= 
+
+    2) Ajax 웹 페이지 동작 방식 
+        - 요청 ======================> 요청 받음                                        
+                                       요청 처리
+                    XMLHttpRequest
+                                       XML 또는 JSON 생성
+              <=======================                         
+
+ 3. JSON 
+    1) Java Script Object Notation
+    2) 자바 스크립트 객체 표기법 
+    3) 표기법 
+        - {속성명1 : 속성값1, 속성명2 : 속성값2, ...}
+        - 객체 배열 
+            [{속성명1 : 속성값1, ...}, {속성명1 : 속성값1, ...},...]
+        - Map 
+            {키1 : {속성명1 : 속성값1, ...}, 키2 : {속성명1 : 속성값1, ...},...}    
+
+4. 제이쿼리 ajax 사용 형식
+        $.ajax({
+            type: "post 또는 get",
+            async: "true 또는 false",
+            url: "요청할 URL",
+            data: {서버로 보낼 데이터},
+            dataType: "서버에서 전송받을 데이터형식",
+            success: {
+               // 정상 요청, 응답 시 처리 
+            },
+            error: {
+                // 오류 발생시 처리
+            },
+            complete: {
+                // 작업 완료 후 처리 
+            }
+        })
+
+5. 스프링 Rest API 사용하기 
+    1) @RequestBody
+        - 브라우저에서 전달되는 JSON 데이터를 객체로 자동 변환해 줌        
+    2) @ResponseBody
+        - 컨트롤러의 특정 메서드에 @ResponseBody을 적용하면 JSP가 아닌 텍스트나 
+          JSON으로 결과를 전송할 수 있음
+
+6. Ajax 요청과 응답 과정
+
+    {name:"user3", age:10}
+                ||
+                || JSON.stringify(person) --JSON문자열로 변환함                                 JSON문자열을 자바객체로 변환해줌      
+               \||/                         /send POST                                         jackson-databind
+    '{"name":"user3", "age":10}'    ------------------------->  '{"name":"user3", "age":10}' ===================> Person 
+                                             요청
+    {name:"user3000", age:2034}
+                /\
+                ||JSON.parse(result) --JSON 객체로 변환함
+                ||                                                                                  자바객체를 JSON문자열로 변환
+   '{"name":"user3000", "age":2034}' <-------------------------- '{"name":"user3000", "age":2034}' <====================                       
+                                             응답                                                 jackson-databind

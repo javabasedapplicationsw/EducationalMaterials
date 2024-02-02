@@ -1,0 +1,59 @@
+1. log4j
+    1) 로그 기능을 제공하는 오픈 소스 라이브러리 
+    2) 애플리케이션에서 웹 사이트에 접속한 사용자 정보나 각 클래스의 메서드 호출 시각 등 여러 가지 정보를
+       로그로 출력해서 관리 
+    3) 메이븐에선 프로젝트 생성 시 자동으로 log4j 라이브러리가 설치됨     
+
+2. log4j.xml을 이루는 태그 
+    1) <appender></appender>       
+        - 로그의 출력 위치(콘솔, 파일 등)를 결정
+        - XXXAppender로 끝나는 클래스들의 이름을 보면 출력 위치를 알수 있음 
+    2) <layout></layout>        
+        - Appender가 어디에 출력할 것인지를 결정했다면 
+          어떤 형식으로 출력할지 출력 레이아웃을 결정함
+    3) <logger></logger>          
+        - 로깅 메시지를 appender에 전달함 
+        - 개발자가 로그 레벨을 이용해 로그 출력 여부를 조정할 수 있음 
+
+3. 여러 Appender 클래스 
+    1) ConsoleAppender
+        - org.apache.log4j.ConsoleAppender 클래스로, 콘솔에 로그 메시지를 출력함 
+    2) FileAppender
+        - org.apache.log4j.FileAppender  클래스로, 파일에 로그 메시지를 출력함    
+    3) RollingFileAppender
+        - org.apache.log4j.rolling.RollingFileAppender 클래스로, 
+          파일 크기가 일정 기준을 넘으면 기존 파일 백업 파일로 바꾸고 
+          처음부터 다시 기록함 
+    4) DailyRollingFileAppender              
+        - org.apache.log4j.DailyRollingFileAppender 클래스로, 
+          설정한 기간 단위로 새 파일을 만들어 로그 메시지를 기록함 
+
+4. PatternLayout 클래스에서 사용되는 여러 출력 속성들
+    1) %p 
+        - debug, info, error, fatal 등 로그 레벨 이름 출력 
+    2) %m
+        - 로그 메시지 출력 
+    3) %d 
+        - 로깅 메시지 발생 시각 출력 
+    4) %F 
+        - 로깅 발생한 프로그램 파일 이름 출력 
+    5) %L 
+        - 로깅 발생한 caller의 라인 수 출력 
+    6) %c
+        - 로깅 메시지 앞에 전체 패키지 이름이나 전체 파일 이름 출력                                         
+
+5. log4j의 여러 가지 로그 레벨들
+    1) FATAL
+        - 시스템 자원에서 심각한 문제가 발생해 애플리케이션이 작동이 불가능한 경우에 
+          해당하는 레벨임
+        - 일반적으로 애플리케이션에서는 사용할 일이 없음
+    2) ERROR  
+        - 실행 중 문제가 발생한 상태를 나타냄 
+    3) WARN 
+        - 경고 메시지를 나타냄 
+    4) INFO 
+        - 로그인, 상태 변경과 같은 실제 애플리케이션 운영과 관련된 정보 메시지를 나타냄 
+    5) DEBUG 
+        - 개발 시 디버깅 용도로 사용한 메시지를 나타냄 
+    6) TRACE 
+        - DEBUG 레벨보다 상세한 로깅 정보를 출력하기 위해 도입한 레벨임                                           
