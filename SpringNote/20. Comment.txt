@@ -5,3 +5,16 @@
     4) Service 작성 (& 테스트)
     5) Controller 작성 (& 테스트)
     6) View (UI) 작성 (& 테스트)
+
+
+
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+
+ 
+</beans>
