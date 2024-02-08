@@ -6,8 +6,21 @@
     5) Controller 작성 (& 테스트)
     6) View (UI) 작성 (& 테스트)
 
+2. REST (Representational State Transfer)
+    0) REST 규약을 준수하는 API 
+    1) Roy Fielding이 제안한 웹서비스 디자인 아키텍처 접근 방식 
+    2) 프로토콜에 독립적이며, 주로 HTTP를 사용해서 구현 
+    3) 리소스 중심의 API 디자인 
+        - HTTP 메서드로 수행할 작업을 정의 
+    4) 예
+
+        URI(리소스)                 GET                        POST                         PUT/PATCH                    DELETE  
+        /comments             모든 댓글 검색(읽기)           새 댓글 만들기(쓰기)        댓글 대량 업데이트(수정)      모든 댓글 제거(삭제)
+        /comments/{cno}       댓글 1에 대한 세부 정보 검색    Error                     댓글 1이 있는 경우            댓글 1 제거 
+                                                                                      댓글1의 세부 정보 업데이트  
 
 
-
-
-org.hibernate.dialect.MySQL8Dialect
+        /comment/read?cno=번호     GET 
+        /comment/write            POST 
+        /commet/remove            POST 
+        /commet/modify            POST     

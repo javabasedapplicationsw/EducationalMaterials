@@ -1,0 +1,82 @@
+1. Configuration Metadata
+    1) XML-based Configuration
+    2) Java-based Configuration
+        - @Bean, @Configuration
+    3) Annotaion-based Configuration
+        - spring 2.5부터 어노테이션을 사용하여 의존성 주입을 구성할 수 있게 되었음 
+        - @Autowired, @Qualified, @Resource 
+        - @Component, @Repository, @Service, @Controller 
+            - 프로그램에 대한 데이터를 제공하는 메타데이터 형식임 
+            - 주석은 프로그램에 대한 추가 정보를 제공하는 데 사용됨 
+
+2. Spring Boot 
+    1) Spring Framework 위에 구축된 프로젝트임   
+    2) Spring Framework에 RAD(Rapid Application Development) 기능을 제공하는 Spring 모듈임 
+    3) 최소한의 Spring 구성으로 실행할 수 있는 독립 실행형 Spring 기반 애플리케이션 만드는 데 사용됨 
+    4) Spring Boot는 마이크로 서비스를 생성하는 데 사용되는 오픈 소스 Java 기반 프레임워크  
+
+    5) Spring Boot는 Spring Framework와 Embedded Servers의 조합임 
+    6) Spring Boot는 XML 구성(배포 설명자)에 대한 요구 사항이 없음 
+    7) 구성 소프트웨어 설계 패러다임에 대한 규칙을 사용하므로 개발자의 노력이 줄어듬 
+    8) Spring STS IDE (Spring Framework, izSpring Initialr)  + Embedded HTTP Servers (Tomcat, Jetty)
+        - XML <bean> Configuration or @Configuration = Spring Boot 
+
+3. SQL과 프로그램의 분리 설계
+    1) SQL과 Java 코드를 분리해서 개발
+        - JDBC 프로그래밍의 문제점 (생산성 떨어짐, 유지보수 어려움) 해결
+
+                            MyBatis Framework    
+             java <------------------------------------> SQL
+                            SQL Mapping Framework
+                                                     SQL Mapper XML File 
+
+    2) ORM 기반 비 SQL 프로그래밍 
+        - JPA (Java Persistence API)는 자바 진영의 ORM 기술 표준 
+            - ORM (Object Relational Mapping)은 객체와 관계형 데이터베이스의 테이블을 매핑하는 기술 
+
+4. Spring Boot 
+    - @Repository
+    - @Service
+    - @Controller
+    - @RestController
+
+5. Spring Boot Prject Architecture (레이어드 아키텍처)
+    - Presentation Layer
+    - Business Layer 
+    - Data Access Layer       
+
+    - 클라이언트 요청을 처리하고 응답하는데 사용되는 구조 
+        - 클라이언트 요청 <--> 프리젠테이션 계층 <--> 비지니스 계층 <--> 데이터 접근 계층 
+            - 프리젠테이션 계층
+                - 요청을 해석, 처리 위임, 응답 
+                - API EndPoint, Controller
+            - 비지니스 계층
+                - 요청을 처리, 도메인 로직을 활용 
+            - 데이터 접근 계층
+                - 데이터를 처리하는 저장소와 연동을 담당       
+
+        - C1 (클라이언트) --> P1(프리젠테이션 계층) --> B1(비지니스 계층) --> R1(데이터 접근 계층)
+          C2 (클라이언트) --> P2(Controller) --> B2(Service + Domain) --> R2 (Repository)   
+
+6. Spring Boot MVC Web Application(3 Tier Architecture)                                                       
+    1) Controller classes
+    2) Service classes
+    3) Repository classes 
+
+7. JPA
+    1) ORM (Object Relational Mapping)으로,
+       RDB 데이터 베이스 정보를 객체지향으로 손쉽게 활용할 수 있도록 도와 주는 도구임 
+    2) Object(자바객체)와 Relational(관계형 데이터베이스) 둘 간의 매핑을 통해서 
+       보다 손쉽게 적용할 수 있는 기술을 제공함 
+    3) 쿼리에 집중하기 보다는 객체에 집중함으로써,
+       조금 더 프로그래밍 적으로 많이 활용할 수 있음.       
+
+    4) Entity
+        - JPA에서는 테이블을 자동으로 생성해주는 기능 존재 
+        - JPA Entity == DB Table 
+        - Annotaion
+            - @Entity
+                - 해당 Class가 Entity임을 명시 
+            - @Id
+                - Index primary key를 명시                 
+
