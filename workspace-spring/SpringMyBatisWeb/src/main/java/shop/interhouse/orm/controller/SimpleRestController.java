@@ -40,6 +40,16 @@ public class SimpleRestController {
 	public String test3() {
 		return "comment/test3";
 	}	
+	
+	@GetMapping("/test4")
+	public String test4() {
+		return "comment/test4";
+	}
+	
+	@GetMapping("/test5")
+	public String test5() {
+		return "comment/test5";
+	}	
 }
 
 

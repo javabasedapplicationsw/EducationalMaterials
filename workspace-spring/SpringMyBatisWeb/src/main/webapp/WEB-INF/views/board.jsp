@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <c:set var="loginId" value="${sessionScope.id }" />
-<c:set var="loginout" value="${loginId==null ? 'Login' : 'Logout' }" />
+<c:set var="loginout" value="${loginId==null ? 'Login' : 'id:'+=loginId }" />
 <c:set var="loginoutlink" value="${loginId==null ? '/login/login' : '/login/logout' }" />
     
 <!DOCTYPE html>
@@ -148,6 +148,66 @@
 					form.submit()
 			})
 				
+			// 댓글 이벤트 처리
+			$("#commentList").on("click", ".modBtn", function() { // commentList안에 있는 modBtn버튼에다가 클릭이벤트를 등록해야함
+				//alert("댓글수정 버튼 클릭됨")
+				let cno = $(this).parent().attr("data-cno")		 // <li>태그는 <button>의 부모태그임	
+				let comment = $("span.comment", $(this).parent()).text()   //클릭된 수정버튼의 부모(li)의 span태그의 텍스트만 가져옴 
+				
+				//comment의 내용을 input에 출력하기
+				$("input[name=comment]").val(comment)
+				// cno 전달하기
+				$("#modBtn").attr("data-cno", cno)
+			})	
+			
+			$("#modBtn").click(function() {
+				//alert("수정하기!!")
+				let cno = $(this).attr("data-cno")
+				let comment = $("input[name=comment]").val()
+
+				if(comment.trim() == '') { 
+					alert("댓글을 입력해 주세요.")
+					$("input[name=comment]").focus()
+					return
+				}
+				
+				$.ajax({ 
+					type : 'PATCH',					// 요청 메서드
+					url : '/orm/comments/'+cno,		// 요청 URI
+					headers : { "content-type" : "application/json" },		// 요청 헤더
+					data : JSON.stringify({cno:cno, comment:comment}),		// 서버로 전송할 데이터. stringify()로 직렬화
+					success : function(result) {		// 서버로부터 응답이 도착하면 호출될 함수
+						alert(result)
+						showList(bno)
+					},
+					error : function() { alert("error") }	// 에러가 발생했을 때, 호출될 함수 
+				})
+				
+				
+			})			
+			
+			$("#insertBtn").click(function() {
+				//showList(bno)
+				let comment = $("input[name=comment]").val();
+				
+				if(comment.trim() == '') { 
+					alert("댓글을 입력해 주세요.")
+					$("input[name=comment]").focus()
+					return
+				}
+				
+				$.ajax({
+					type : 'post',						// 요청 메서드
+					url : '/orm/comments?bno='+bno,		// 요청 URI
+					headers : {"content-type" : "application/json"}, 	//요청 헤더
+					data : JSON.stringify({bno:bno, comment:comment}), 	//서버로 전송할 데이터.stringify()로 직렬화
+					success : function(result) {
+						alert(result)
+						showList(bno)
+					},
+					error : function() { alert("error")	}		// 에러가 발생했을 때, 호출될 함수
+				})
+			})			
 			
 			$("#commentList").on("click", ".delBtn", function() {
 				//alert("삭제 버튼 클릭됨")
@@ -192,6 +252,7 @@
 						tmp += ' commenter=<span class="commenter">' + comment.commenter + '</span>'
 						tmp += ' comment=<span class="comment">' + comment.comment + '</span>'	
 						tmp += ' <button class="delBtn">삭제</button>'
+						tmp += ' <button class="modBtn">수정</button>'
 						tmp += '</li>'
 					})
 						
@@ -206,6 +267,7 @@
 	<script type="text/javascript">
 		let msg = "${msg}"
 		if(msg == "WRT_ERR") alert("게시물 등록에 실패하였습니다. 다시 시도해 주세요.")
+		if(msg == "MOD_ERR") alert("게시물 수정에 실패하였습니다. 다시 시도해 주세요.")
 	</script>
 	
 	<div class="container">
@@ -226,7 +288,12 @@
 			<button type="button" id="listBtn" class="btn btn-list"><i class="fas fa-bars"></i>목록</button>
 					
 		</form>
+		
+		<button id="modBtn" type="button">수정하기</button>		
 		<div id="commentList"></div>
+
+		comment : <input type="text" name="comment" />
+		<button id="insertBtn" type="button">댓글작성</button>		
 	</div>
 </body>
 </html>
