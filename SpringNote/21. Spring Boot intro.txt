@@ -18,7 +18,7 @@
     5) Spring Boot는 Spring Framework와 Embedded Servers의 조합임 
     6) Spring Boot는 XML 구성(배포 설명자)에 대한 요구 사항이 없음 
     7) 구성 소프트웨어 설계 패러다임에 대한 규칙을 사용하므로 개발자의 노력이 줄어듬 
-    8) Spring STS IDE (Spring Framework, izSpring Initialr)  + Embedded HTTP Servers (Tomcat, Jetty)
+    8) Spring STS IDE (Spring Framework, Spring Initializr)  + Embedded HTTP Servers (Tomcat, Jetty)
         - XML <bean> Configuration or @Configuration = Spring Boot 
 
 3. SQL과 프로그램의 분리 설계
@@ -63,7 +63,17 @@
     2) Service classes
     3) Repository classes 
 
-7. JPA
+7. Spring Boot Embedded Server 
+    1) embedded HTTP Server 제공
+    2) 서버를 별도로 설치할 필요가 없음
+    3) 예
+        - order-management-app.jar 
+            - code 
+            - Tomcat
+    4) Running Spring Boot Apps 
+        - 예) java -jar  order-management-app.jar           
+
+8. JPA
     1) ORM (Object Relational Mapping)으로,
        RDB 데이터 베이스 정보를 객체지향으로 손쉽게 활용할 수 있도록 도와 주는 도구임 
     2) Object(자바객체)와 Relational(관계형 데이터베이스) 둘 간의 매핑을 통해서 

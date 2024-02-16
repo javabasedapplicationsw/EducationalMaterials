@@ -1,0 +1,66 @@
+1. Open API (Application Programming Interface)
+    1) 개방형 API 
+    2) API가 응용 프로그램을 개발할 때 사용하는 인터페이스라는 의미 
+    3) 프로그래밍에서 사용할 수 있는 개방되어 있는 상태의 인터페이스 
+    4) 대부분 Open API는 REST 방식으로 지원되고 있음 
+
+2. REST (REpresentational Safe Transfer)
+    1) HTTP URI + HTTP Method     
+    2) HTTP URI를 통해 제어할 자원(Resource)를 명시하고, 
+       HTTP Method (GET, POST, PUT, DELETE)를 통해 해당 자원(Resource)을 제어하는 
+       명령을 내리는 방식의 아키텍처
+       - Http Method                    CRUD 
+         ----------------------------------------------
+         POST                           Create(Insert)
+         GET                            Read(Select)
+         PUT                            Update or Create 
+         DELETE                         Delete 
+
+3. REST (REpresentational Safe Transfer)ful API 
+    1) HTTP와 URI 기반으로 자원에 접근할 수 있도록 제공하는 애플리케이션 개발 인터페이스 
+    2)          기존 웹 접근 방식               vs              RESTful API 방식
+       -------------------------------------------------------------------------
+        글읽기  GET /list.do?no=510&pageSize=10               GET /bbs/board/510, /bbs/boards
+        글등록  POST /insert.do                               POST /bbs/board/510
+        글삭제  GET /delete.do?no=510&pageSize=10             DELETE /bbs/board/510
+        글수정  POST /update.do                               PUT /bbs/board/510  
+
+4. RESTful 웹서비스와 YAML/JSON/XML    
+
+
+        Client
+                              HTTP Request                          Web Server -- Database 
+                              YAML/JSON/XML                         Web Server -- Database
+        Smartphone 
+
+                                                                - Server로의 연결 
+                                                                    - RestTemplate         
+
+5. RESTful Controller를 위한 핵심 애노테이션(Annotaion)
+    1) Spring MVC에서는 클라이언트에서 전송한 JSON 데이터를
+       Controller에서 객체로 변환해서 받을 수 있는 있는 기능 제공 
+                                   역직렬화  
+            JSON      --------------------------------->       DTO (Object)
+                      <---------------------------------           title = "안녕하세요"
+                                   직렬화                           content = "이제 주말이..."
+
+            {                                               Article.java
+                "title" : "안녕하세요.",                     
+                "content" : "이제 주말이..."
+            }
+
+
+
+
+
+    2) 애노테이션
+        - @RequestBody    
+            - HTTP Request Body를 Java 객체로 전달 받을 수 있음
+        - @ResponseBody
+            - Java 객체를 HTTP Response Body로 전송할 수 있음
+            - Json 응답을 보낼때.
+
+    3) Web에서 응답 만들기 
+        - ResponseEntity
+            - Body의 내용을 Object로 설정
+            - 상황에 따라서 HttpStatus Code 설정                         

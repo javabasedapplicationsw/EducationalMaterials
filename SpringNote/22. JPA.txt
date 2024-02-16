@@ -1,0 +1,105 @@
+1. JPA (Java Persistence API) 
+    1) ORM (Object Relational Mapping)을 위한 Java 표준 API 
+    2) JPA 구현체 
+        - HIBERNATE, OpenJpa, EclipseLink, DataNucleus,... 
+    3) Persistence(영속성) 
+        - 애플리케이션 종료 후에도 객체(데이터)가 유지되는 것       
+
+2. ORM Framework - HIBERNATE         
+    1) 객체와 DB테이블 간의 연결을 해주는 프레임워크 
+    2) 객체 모델(object model)과 관계형 모델(relational model)의 차이를 해소 
+
+            object model                                        relational model
+
+            object                                              -----------------------
+                                                                |   |   |   |  |   |  |                 
+                       object              mapping              -----------------------
+                                        <------------>          |   |   |   |  |   |  |  
+                                                                -----------------------
+                                                                |   |   |   |  |   |  |     
+
+3. 객체 모델과 관계형 모델 비교 
+
+            객체 모델(object model)              관계형 모델(relational model)  
+    -----------------------------------------------------------------------
+    구조    나누기 쉬움                           나누기 어려움 
+    상속    지원                                 지원 안함
+    비교    동일비교(==)와 동등비교(equals())     동일비교(==) 
+    조회    그래프 (객체간의 참조 연결)            테이블(2차원 데이터)
+    관계    단방향 (단방향*2로 양방향처리)         양방향(한쪽 테이블에만 FK 지정)   
+
+4. SQL Mapper (MyBatis) vs ORM Framework (HIBERNATE)    
+
+5. EntityManager와 EntityManagerFactory 
+    1) EntityManagerFactory
+        - EntityManager를 생성. 애플리케이션에 하나.
+            - createEntityManager()
+    2) EntityManager
+        - Entity를 저장 관리. 사용자당 하나.  
+        - 공유불가 
+        - 사용자는 직접 DB에 명령내리는 대신, EntityManager로만 작업  
+        - 저장 : persist(), 조회 : find(), 삭제 : remove(), 변경 : Entity의 setter()를 이용    
+
+6. Entity 클래스 작성
+    1) Entity 클래스 
+        - DB 테이블의 한 행(row)을 정의한 것     
+        - Entity 클래스를 작성하고 @Entity를 붙임 
+        - Entity 클래스에서 키(PK)로 사용할 속성에 @Id를 붙임    
+
+    2) Entity 클래스 작성을 위한 애노테이션 
+        - @Entity
+            - Entity 클래스에 사용 
+        - @Id
+            - DB 테이블의 PK로 사용할 속성에 사용 
+        - @GeneratedValue
+            - 자동 번호 생성을 적용할 속성에 사용 
+                - strategy
+                    - 사용 번호 생성 전략을 선택 
+                - generator
+                    - 이미 생성된 키 생성키를 참조       
+
+                - GenerationType.IDENTITY  
+                    - IDENTITY 사용 (MySQL)
+                - GenerationType.SEQUENCE
+                    - 시퀀스 사용 (Oracle)
+                - GenerationType.AUTO
+                    - DB에 따라 자동 선택 
+                - GenerationType.TABLE
+                    - DB 테이블 사용     
+        - @Column
+            - name  
+                - 컬럼 이름(속성 이름)
+            - updatable
+                - update문에 포함여부   
+            - nullable
+                - null 입력 허용(true)                 
+
+
+
+7. Spring Data와 Spring Data JPA 
+    1) Spring Data
+        - 저장소 종류가 달라도 일관된 데이터 처리 방법을 제공  
+        - Interface Repository<T,ID>
+        - Interface CrudRepository<T,ID>
+        - Interface PagingAndSortingRepository<T,ID>
+    2) Spring Data JPA
+        - JPA를 위한 저장소(JpaRepository)와 관련 기능을 제공
+        - Interface JpaRepository<T,ID>
+
+8. CrudRepository 인터페이스의 메서드 
+    1) 조회
+        long count();                   entity 수를 반환
+        boolean existsById(ID id);      지정된 id와 일치하는 entity가 존재하는 확인
+        Optional<T> findById(ID id);    지정된 id와 일치하는 entity 반환
+        Iterable<T> findAllById(Iterable<ID> ids);      지정된 id와 일치하는 entity 반환
+        Iterable<T> findAll();          모든 entity를 반환
+    2) 변경 저장
+        <S extends T> S save(S entity);     지정된 entity 저장
+        <S extends T> Iterable<S> saveAll(Iterable<S> entities);     지정된 entity들 저장       
+    3) 삭제   
+        void deleteById(ID id);         지정된 id와 일치하는 entity 삭제
+        void delete(T entity);          지정된 entity 삭제
+        void deleteAllById(Iterable<? extends ID> ids);     지정된 id들에 해당하는 entity 삭제
+        void deleteAll(Iterable<? extends T> entities);     지정된 entity들에 해당하는 entity 삭제
+        void deleteAll();               모든 entity 삭제      
+
