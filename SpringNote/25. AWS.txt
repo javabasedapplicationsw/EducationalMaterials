@@ -1,0 +1,75 @@
+1. 리눅스 기본 명령어 
+    1) clear
+        - 터미널 화면 비울때 사용하는 명령어 
+    2) pwd
+        - 현재 내가 위치한 경로를 알려주는 명령어 
+    3) cd 
+        - Change Directory 약어 
+        - 폴더 이동 시 사용하는 명령어 
+    4) mkdir
+        - 폴더를 생성할 때 사용하는 명령어 
+    5) touch
+        - 빈 파일을 생성할 때 사용하는 명령어 
+    6) rm 
+        - 폴더나 파일을 삭제할 때 사용하는 명령어
+        - 옵션 (-f, -r)       
+    7) ls 
+        - 현재 폴더에 있는 모든 파일과 폴더의 상태를 확인하는 명령어 
+        - 옵션 (-a, -l)            
+    8) cp
+        - 파일을 복사할 때 사용하는 명령어 
+    9) mv 
+        - 파일의 위치를 이동할 때 사용하는 명령어
+        - 파일 이름을 변경할 수도 있음 
+    10) echo 
+        - 모니터 화면에 출력하라고 시키는 명령어       
+
+2. EC2 프로그램 설치
+    1) APT 명령어
+        - APT(Advanced Package Tool)
+        - 리눅스 운영 체제에서 패키지 관리를 위해 사용되는 소프트웨어 관리 도구 
+
+                         A 사이트     B 사이트    C 사이트
+
+                                우분투 저장소 
+                          A 프로그램,  B 프로그램, C 프로그램     
+                                       || 
+                                       ||  apt-get install 프로그램명  
+                                       ||
+                                       \/ 
+                            EC2 컴퓨터 (우분투)
+
+    2) sudo apt-get update  
+        - APT LIST(== 메뉴판)를 동기화   
+        - 메뉴판 업데이트하기 
+        - sudo는 슈퍼 관리자의 권한을 위임받는 명령어      
+
+    3) 특정 프로그램 검색 
+        - sudo apt-cache search tomcat        
+        - sudo apt-cache search tomcat | grep tomcat9
+            - 파이프라인(|)을 이용해서 검색된 결과를 grep 명령어로 전달
+            - grep : 문자열을 찾는 명령어 
+
+    4) 특정 프로그램 설치 
+        - sudo apt-get install tomcat9
+        - sudo apt-cache search openjdk | grep openjdk-17
+        - sudo apt-get -y install tomcat9
+        - sudo apt-get install -y openjdk-17-jdk
+            - -y 옵션
+                - 질문(저장 공간)에 답변을 미리 할 수 있는 옵션 
+
+    5) 8080 port 
+        - tomcat이 실행되는 포트 
+        - netstat 명령을 통해 실행중인 포트 확인 
+            - sudo apt-get install -y net-tools (프로그램 설치)
+            - netstat -nlpt            
+
+3. 인바운드 규칙 설정 
+    1) AWS 리소스 (EC2)에 들어오는 네트워크 트래픽 관리하는 것 
+    2) 일종의 방화벽 역할을 함   
+    3) 특정 IP 주소, 포트, 프로토콜 등에서 오는 트래픽을 허용하거나 차단 할 수 있음 
+
+4. 서비스 명령어 systemctl
+    1) systemctl stop tomcat9
+       systemctl start tomcat9
+       systemctl restart tomcat9              

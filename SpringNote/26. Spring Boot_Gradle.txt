@@ -1,0 +1,21 @@
+7. 블로그 글 작성하기 (API 구현)
+    0) 블로그 글 목록 조회, 블로그 글 추가, 블로그 글 상세 조회, 수정/삭제 기능 
+
+    1) 요청을 받을 객체를 생성하기 (AddArticleRequest) 
+            - DTO 
+                - 계층끼리 데이터를 교환하기 위해 사용하는 객체
+                - 단순하게 데이터를 옮기기 위해 사용하는 전달자 역할하는 객체 
+                - 별도의 비즈니스 로직 미포함   
+       응답을 위한 DTO (ArticleResponse)                   
+ 
+    2) 서비스 메서드 구현하기
+        - save()
+        - findAll()
+        - findById()
+        - delete()
+
+    3) 컨트롤러 메서드 코드 작성
+        - addArticle()
+        - findAllArticles()
+        - findArticle()
+        - deleteArticle()
