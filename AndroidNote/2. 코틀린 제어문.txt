@@ -1,0 +1,11 @@
+1. 범위 클래스 
+    1) 특정 범위의 값들을 표현 
+    2) IntRange, LongRange, CharRange 등 
+
+2. for문 
+
+3. while문 
+
+4. if문 
+
+5. when문 
